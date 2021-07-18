@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="#D4DBEF"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="#FFFFFF"
+        >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3"
+    android:layout_margin="5dp"
+    android:backgroundTint="#000"
+    >
+
+        <ImageView
+            android:id="@+id/image_offer_id"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.6"
+            android:src="@drawable/headerhome"
+            android:scaleType="centerCrop"
+            />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#7C7A7A"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="-10dp"
+    android:layout_marginLeft="@dimen/_20sdp"
+    android:layout_marginRight="@dimen/_20sdp"
+    />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1.5"
+    android:orientation="horizontal"
+    android:weightSum="2.5"
+    >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.3"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:weightSum="2"
+    >
+<TextView
+    android:id="@+id/new_price_offer_id"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:gravity="center|bottom"
+    android:text="300 جنيه"
+    android:textColor="#2f8b04"
+    android:textSize="13sp"
+    android:fontFamily="@font/cairo_semibold"
+    />
+    <TextView
+        android:id="@+id/end_data_offer_id"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ينتهى في :25/3"
+        android:textColor="#2e3094"
+        android:textSize="8sp"
+        android:fontFamily="@font/cairo_semibold"
+        />
+</LinearLayout>
+
+<TextView
+    android:layout_width="1dp"
+    android:layout_height="match_parent"
+    android:background="#958E8E"
+    android:layout_marginTop="@dimen/_25sdp"
+    android:layout_marginBottom="@dimen/_25sdp"
+    />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2"
+            >
+
+            <TextView
+                android:id="@+id/old_price_offer_id"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:text="600 جنيه"
+                android:textColor="#eb1c22"
+                android:textSize="13sp"
+                android:fontFamily="@font/cairo_semibold"
+                />
+            <TextView
+                android:id="@+id/start_data_offer_id"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="يبدأ من :15/3"
+                android:textColor="#2e3094"
+                android:textSize="8sp"
+                android:fontFamily="@font/cairo_semibold"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:orientation="vertical"
+        android:weightSum="3"
+        >
+<TextView
+    android:id="@+id/title_offers_id"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:text="تحليل صورة دم كامله"
+    android:gravity="center|right"
+    android:textSize="13sp"
+    android:textColor="#2e3094"
+    android:fontFamily="@font/cairo_semibold"
+    android:paddingRight="5dp"
+    />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#918F8F"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:id="@+id/description_offer_id"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="يُفضّل أن يكون مع المريض قطعة حلوى أو سكر، . في حال شعوره بانخفاض مستوى السكر"
+            android:gravity="top|right"
+            android:textSize="10sp"
+            android:textColor="#2e3094"
+            android:textDirection="rtl"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/cairo_semibold"
+            android:maxLines = "4"
+            android:paddingTop="10dp"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
+
+</LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

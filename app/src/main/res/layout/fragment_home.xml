@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragemnt.HomeFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+
+
+                >
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="1.8dp"
+                    app:sliderIndicatorSelectedColor="#3068F8"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.028"
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#000"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:backgroundTint="#E0E1EA"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right"
+                        android:orientation="horizontal"
+                        android:weightSum="2.5">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:weightSum="4">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="0.9"
+                                android:gravity="center"
+                                android:text="معامل ستي لاب"
+                                android:textColor="#2e3094"
+                                android:textSize="18sp" />
+
+                            <Button
+                                android:id="@+id/resulthome_id"
+                                android:layout_width="130dp"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="0.9"
+                                android:background="@drawable/borderwhite"
+                                android:fontFamily="@font/cairo_semibold"
+                                android:gravity="center"
+                                android:text=" نتائج التحاليل"
+                                android:textColor="#2e3094"
+                                android:textSize="13sp"
+
+
+                                />
+
+                            <Button
+                                android:id="@+id/booking_test_id"
+                                android:layout_width="130dp"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="0.9"
+                                android:background="@drawable/borderwhite"
+                                android:fontFamily="@font/cairo_semibold"
+                                android:gravity="center"
+                                android:text="حجز تحاليل"
+                                android:textColor="#2e3094"
+                                android:textSize="13sp"
+
+                                />
+
+                            <Button
+                                android:id="@+id/aboutus_id"
+                                android:layout_width="130dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.9"
+                                android:background="@drawable/borderwhite"
+                                android:fontFamily="@font/cairo_semibold"
+                                android:gravity="center"
+                                android:text=" نبذه عنا"
+                                android:textColor="#2e3094"
+                                android:textSize="13sp" />
+
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/homeimage" />
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#000"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:backgroundTint="#FFFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2"
+                    app:layout_constraintVertical_bias="0.109">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/light"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toEndOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.056" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cairo_semibold"
+                            android:gravity="center"
+                            android:text="نصايح "
+                            android:textColor="#2e3094"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.867"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.057" />
+
+                        <Button
+                            android:id="@+id/suger_id_home"
+                            android:layout_width="150dp"
+                            android:layout_height="45dp"
+                            android:layout_marginRight="15sp"
+                            android:background="@drawable/borderwhite"
+                            android:drawableRight="@drawable/sugeronet"
+                            android:gravity="center"
+                            android:paddingRight="10dp"
+                            android:text="قياس مستوى السكر"
+                            android:textColor="#2e3094"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.382" />
+
+                        <Button
+                            android:id="@+id/presserblode_id_home"
+                            android:layout_width="150dp"
+                            android:layout_height="45dp"
+                            android:background="@drawable/borderwhite"
+                            android:drawableRight="@drawable/bloodpre"
+                            android:gravity="center"
+                            android:paddingRight="10dp"
+                            android:text="قياس ضغط الدم"
+                            android:textColor="#2e3094"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.061"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.376" />
+
+                        <Button
+                            android:id="@+id/perfect_wight_id_home"
+                            android:layout_width="150dp"
+                            android:layout_height="45dp"
+                            android:layout_marginRight="15sp"
+                            android:background="@drawable/borderwhite"
+                            android:drawableRight="@drawable/wight"
+                            android:gravity="center"
+                            android:paddingRight="10dp"
+                            android:text="الوزن المثالى"
+                            android:textColor="#2e3094"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.939" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#000"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:orientation="vertical"
+                    android:weightSum="4"
+
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/mark"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.958"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="العروض"
+                            android:textColor="#2e3094"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.487" />
+
+                        <Button
+                            android:id="@+id/see_all_offer"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/backgroundblack"
+                            android:fontFamily="@font/cairo_semibold"
+                            android:gravity="center"
+                            android:text="رؤيه  الكل"
+                            android:textColor="#2e3094"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView4"
+                            app:layout_constraintHorizontal_bias="0.075"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:background="#F8F8FB"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2.5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1.4"
+                            android:backgroundTint="#FFFFFF"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:weightSum="3">
+
+                                <ImageView
+                                    android:id="@+id/imag_home_offer_one"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_weight="1.7"
+                                    android:src="@drawable/nooffer" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.3"
+                                    android:orientation="vertical"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:weightSum="3">
+
+                                        <TextView
+                                            android:id="@+id/old_pric_one_id"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.8"
+                                            android:gravity="center"
+                                            android:text="600"
+                                            android:textColor="#E40418"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/new_pric_one_id"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.8"
+                                            android:gravity="center"
+                                            android:text="500"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/title_one_offer"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginRight="3dp"
+                                            android:layout_weight="1.4"
+                                            android:gravity="right|center"
+                                            android:text="عنوان العرض"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="right|center"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/end_id_one"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right|center"
+                                            android:text="ينتهى في :25/3"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/start_id_one"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginRight="3dp"
+                                            android:layout_weight="1"
+                                            android:gravity="right|center"
+                                            android:text="يبدأ من :15/3"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+                                    </LinearLayout>
+                                    <TextView
+                                        android:id="@+id/text_one"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:text="لا يوجد عروض لان"
+                                        android:textSize="15sp"
+                                        android:gravity="center"
+                                        android:fontFamily="@font/cairo_semibold"
+                                        />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+
+                            android:layout_marginLeft="2.5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1.4"
+                            android:backgroundTint="#FFFFFF"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:weightSum="3"
+
+                                >
+
+                                <ImageView
+                                    android:id="@+id/imag_home_offer_two"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_weight="1.7"
+                                    android:src="@drawable/nooffer"
+
+                                    />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.3"
+                                    android:orientation="vertical"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:weightSum="3">
+
+                                        <TextView
+                                            android:id="@+id/old_pric_two_id"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.8"
+                                            android:gravity="center"
+                                            android:text="600"
+                                            android:textColor="#E40418"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/new_pric_two_id"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.8"
+                                            android:gravity="center"
+                                            android:text="500"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/title_two_offer"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginRight="3dp"
+                                            android:layout_weight="1.4"
+                                            android:gravity="right|center"
+                                            android:text="عنوان العرض"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="right|center"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2"
+
+                                        >
+
+                                        <TextView
+                                            android:id="@+id/end_id_two"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right|center"
+                                            android:text="ينتهى في :25/3"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/start_id_two"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginRight="3dp"
+                                            android:layout_weight="1"
+                                            android:gravity="right|center"
+                                            android:text="يبدأ من :15/3"
+                                            android:textColor="#2e3094"
+                                            android:textSize="12sp" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:id="@+id/text_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:text="لا يوجد عروض لان"
+                                        android:textSize="15sp"
+                                        android:gravity="center"
+                                        android:fontFamily="@font/cairo_semibold"
+                                        />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="#FFFF"
+                    android:gravity="top">
+
+                    <ImageView
+                        android:id="@+id/next_updat_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/advice" />
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#000"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+            </LinearLayout>
+
+
+        </ScrollView>
+    </RelativeLayout>
+
+</FrameLayout>
