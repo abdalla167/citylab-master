@@ -25,14 +25,16 @@ public class OffersViewModel extends ViewModel {
             @Override
             public void onResponse(Call<AllOffer> call, Response<AllOffer> response) {
                 if(response.isSuccessful()) {
-
                     allOfferMediatorLiveData.setValue(response.body());
-
+                    //  Log.e("offerfragment", "onResponse: "+response.body().getData() );
+                    //  Log.d("offerfragment", "onResponse: "+response.body(). getData().get(0).getTitle());
+                    // Log.v("offerfragment", "onResponse: "+response.body().getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<AllOffer> call, Throwable t) {
+                Log.e("offerfragment", "onResponse: "+t.getMessage() );
             }
         });
 return allOfferMediatorLiveData;

@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.medical.citylap.R;
 import com.medical.citylap.activity.ResultActivty;
 import com.medical.citylap.fragemnt.PDF_Fragment;
+import com.medical.citylap.helperfunction.SavingPdf;
 import com.medical.citylap.modles.Result;
 import com.medical.citylap.modles.ResultApi;
 import com.medical.citylap.modles.Resultcopy;
@@ -44,6 +46,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
     ArrayList<Result> listresult = new ArrayList<>();
     ArrayList<Resultss> listresultapi = new ArrayList<>();
     private Context mContext;
+    SavingPdf savingPdf;
     Uri uri;
     ArrayList<Resultcopy> re = new ArrayList<>();
 
@@ -78,21 +81,52 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
             holder.imageViewmax.setImageResource(R.drawable.ic_baseline_minimize_24);
             if (resultApi.getData().get(position).getMediaType() == 1) {
                 //file
-                holder.linearLayout_pdf.setOnClickListener(new View.OnClickListener() {
+                holder.recycler.setVisibility(View.GONE);
+                holder.noimag.setVisibility(View.VISIBLE);
+                holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragmentJump(resultApi.getData().get(position).getFiles().get(0));
+
+                    }
+                });
+                holder.showPdf.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         fragmentJump(resultApi.getData().get(position).getFiles().get(0));
+
                     }
                 });
-                holder.recycler.setVisibility(View.GONE);
-                holder.noimag.setVisibility(View.VISIBLE);
+                holder.downloadPdf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        savingPdf=new SavingPdf(mContext,resultApi.getData().get(position).getNotes() + "",
+                                Integer.parseInt(String.valueOf(resultApi.getData().get(position).getResultId())));
+                        savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(0).trim(),1);
+
+                    }
+                });
+
+
             }
-            else
+            if(resultApi.getData().get(position).getMediaType() == 0)
                 {
                 holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                 holder.adapter = new AdapteronlyImage(mContext);
                 holder.adapter.setlist(resultApi.getData().get(position).getFiles());
                 holder.recycler.setAdapter(holder.adapter);
+                    holder.downloadPdf.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            savingPdf=new SavingPdf(mContext,resultApi.getData().get(position).getNotes() + "",
+                                    Integer.parseInt(String.valueOf(resultApi.getData().get(position).getResultId())));
+                            holder.downloadPdf.setClickable(false);
+                            for(int i=0;i<resultApi.getData().get(position).getFiles().size();i++) {
+                                savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(i).trim(), 0);
+                            }
+                            holder.downloadPdf.setClickable(true);
+                        }
+                    });
                 }
         }
 
@@ -110,20 +144,24 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
-        ImageView imageViewmax, imageViewmin;
+        ImageView imageViewmax, imageViewmin,showPdf,downloadPdf;
         LinearLayout layout, linearLayout_pdf;
         RecyclerView recycler;
         AdapteronlyImage adapter;
         TextView typetest, date, noimag;
+        ConstraintLayout constraintLayout;
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
+            constraintLayout=itemView.findViewById(R.id.constraintLayout_show_pdf);
             imageViewmax = itemView.findViewById(R.id.plus_expandbal_list_result);
             layout = itemView.findViewById(R.id.body_expand_result_id);
             recycler = itemView.findViewById(R.id.recyclerview_image_inseid_result_id);
             typetest = itemView.findViewById(R.id.name_of_singl_rsult_id);
             noimag = itemView.findViewById(R.id.textnnoimage);
+            showPdf=itemView.findViewById(R.id.showpdf);
             linearLayout_pdf = itemView.findViewById(R.id.linear_download_pdf);
+            downloadPdf=itemView.findViewById(R.id.downloadpdf);
             linearLayout_pdf.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.R)
                 @Override
@@ -165,15 +203,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 //        dialog.dismiss();
 //    }
 //});
-
-
-
-
-
-
-
-
-
 
                     }
 //                    new DownloadPDF().

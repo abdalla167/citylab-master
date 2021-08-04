@@ -69,8 +69,6 @@ public class ResultActivty extends AppCompatActivity {
                         mRecyclerView.setVisibility(View.GONE);
                         tvView.setVisibility(View.VISIBLE);
                         tvView.setText("لا يوجد نتائج حاليا");
-                        progressBar.setVisibility(View.GONE);
-
                     }
                     Log.d("TAG", "onResponse:result: "+SplashScreen.token_user);
                     for(int i=0;i<resultApi.getData().size();i++)
@@ -81,9 +79,9 @@ public class ResultActivty extends AppCompatActivity {
                     adapterResult.setlist2(resultApi,listofresultapi);
                     mRecyclerView.setAdapter(adapterResult);
                     progressBar.setVisibility(View.GONE);
+
                 }
             });
-
 
         }
         else {
@@ -91,9 +89,8 @@ public class ResultActivty extends AppCompatActivity {
             tvView.setVisibility(View.VISIBLE);
             imgview.setVisibility(View.VISIBLE);
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-
         }
+        LoadingDialog.hideDialog();
 
         imageView_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,51 +4,49 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_50sdp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginVertical="@dimen/_10ssp"
-    android:gravity="center"
     >
+<androidx.cardview.widget.CardView
 
-    <androidx.cardview.widget.CardView
-
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    app:cardCornerRadius="15dp"
+    android:background="@drawable/backgroundlocation"
+    android:padding="10dp"
+    app:layout_constraintTop_toTopOf="parent"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/backgroundlocation"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        >
 
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:layout_weight="3"
+            android:gravity="center|right"
+            android:text="sdvsdv"
+            android:paddingRight="25dp"
+            android:textSize="13dp"
+            android:fontFamily="@font/cairo_semibold"
+            android:textColor="#3E5DFA"
+            />
 
-            <TextView
-                android:id="@+id/text_location"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:fontFamily="@font/cairo_semibold"
-                android:gravity="center|right"
-                android:paddingRight="25dp"
-                android:text="sdvsdv"
-                android:textColor="#3E5DFA"
-                android:textSize="13dp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/markergreen"
+            android:scaleType="center"
+            />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="center"
-                android:src="@drawable/markergreen" />
-
-        </LinearLayout>
+    </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

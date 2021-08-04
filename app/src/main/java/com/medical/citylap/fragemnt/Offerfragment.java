@@ -33,6 +33,7 @@ import com.medical.citylap.modles.Datum;
 import com.medical.citylap.viewModel.OffersViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
@@ -65,8 +66,10 @@ ProgressBar progressBar;
             offersViewModel.getAllOffer().observe( getViewLifecycleOwner(),new Observer<AllOffer>() {
                 @Override
                 public void onChanged(AllOffer allOffers) {
-//                    Log.d(TAG, "onChanged: "+allOffers.getData().size());
-                    offerAdapter.setlist((ArrayList<Datum>) allOffers.getData());
+                    ArrayList<Datum> rev=new ArrayList<>();
+                    rev= (ArrayList<Datum>) allOffers.getData();
+                    Collections.reverse(rev);
+                    offerAdapter.setlist( rev);
                     mRecyclerView.setAdapter(offerAdapter);
                     progressBar.setVisibility(View.GONE);
                 }

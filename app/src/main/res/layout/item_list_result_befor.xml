@@ -126,6 +126,7 @@
 
         </LinearLayout>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout_show_pdf"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_marginLeft="10dp"
@@ -182,7 +183,7 @@
                 android:src="@drawable/ic_baseline_arrow_circle_down_24" />
 
             <ImageView
-                android:id="@+id/downloadpdfandopenit"
+                android:id="@+id/showpdf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
