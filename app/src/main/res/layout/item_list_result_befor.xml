@@ -55,7 +55,6 @@
                 android:fontFamily="@font/cairo_semibold"
                 android:gravity="center|right"
                 android:textSize="13sp"
-                android:text="التاريخ : "
                 android:textColor="#2e3094" />
 
             <TextView
@@ -104,7 +103,6 @@
                 android:gravity="center|left"
                 android:lineSpacingExtra="15sp"
                 android:paddingLeft="30sp"
-                android:text="الموافق : 1/5/2020"
                 android:textColor="#2e3094"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -118,7 +116,6 @@
                 android:gravity="center|right"
                 android:lineSpacingExtra="15sp"
                 android:paddingRight="30dp"
-                android:text="يوم : الاثنين"
                 android:textColor="#2e3094"
                 android:textSize="10sp"
                 android:textStyle="bold" />

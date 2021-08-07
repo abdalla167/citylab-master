@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,19 +29,22 @@ public class SavingPdf {
         this.id=id;
     }
 
-    public void DownloadFile(String uri,int type)
+    public String DownloadFile(String uri,int type)
     {
 
-
-
+        SharedPreferences preferences3 = context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
+        String retrivedphonenumber = preferences3.getString("phonenumberuser", null);
+        if(retrivedphonenumber==null)
+        {
+            retrivedphonenumber="";
+        }
         uri = "http://" + uri;
-
         ContentResolver resolver = context.getContentResolver();
         ContentValues contentValues = new ContentValues();
         if(type==0)
         {
             //Image
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/تحاليل صور معمل المدينه"+"/"+id);
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/تحاليل صور معمل المدينه"+"/"+retrivedphonenumber+"/"+id);
             String path = String.valueOf(resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues));
             File folder = new File(path);
             boolean isCreada = folder.exists();
@@ -53,16 +57,16 @@ public class SavingPdf {
             String cookie = CookieManager.getInstance().getCookie(uri);
             request.addRequestHeader("cookie", cookie);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES ,"/تحاليل صور معمل المدينه"+"/"+id+""+"/"+titel+".png" );
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES ,"/تحاليل صور معمل المدينه"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".png" );
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
-            Toast.makeText(context, "يتم بداء التحمبل الان", Toast.LENGTH_SHORT).show();
 
+           return "/تحاليل صور معمل المدينه"+"/"+retrivedphonenumber+"/"+id;
         }
-        if(type==1)
+        else
         {
             //Documnet
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/تحاليل ملفات معمل المدينه"+"/"+id);
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/تحاليل ملفات معمل المدينه"+"/"+retrivedphonenumber+"/"+id);
             String path = String.valueOf(resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues));
             File folder = new File(path);
             boolean isCreada = folder.exists();
@@ -75,15 +79,12 @@ public class SavingPdf {
             String cookie = CookieManager.getInstance().getCookie(uri);
             request.addRequestHeader("cookie", cookie);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES  ,"/تحاليل ملفات معمل المدينه"+"/"+id+""+"/"+titel+".pdf"  );
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES  ,"/تحاليل ملفات معمل المدينه"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".pdf"  );
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
             Toast.makeText(context, "يتم بداء التحمبل الان", Toast.LENGTH_SHORT).show();
-
+return "/تحاليل ملفات معمل المدينه"+"/"+retrivedphonenumber+"/"+id;
         }
-
-
-
 
     }
 }

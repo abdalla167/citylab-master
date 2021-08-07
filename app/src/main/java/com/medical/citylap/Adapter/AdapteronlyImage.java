@@ -31,6 +31,7 @@ public class AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.View
     List<String> listoffer=new ArrayList<>();
     private Context mContext;
     Uri uri;
+    int stat;
     public void setlist(List<String> listOffer){
 
         this.listoffer=listOffer;
@@ -43,8 +44,8 @@ public class AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.View
         return new AdapteronlyImage.ViewHolder2(view);
     }
 
-    public AdapteronlyImage( Context mContext) {
-
+    public AdapteronlyImage( Context mContext,int stat) {
+this.stat=stat;
         this.mContext = mContext;
     }
 
@@ -55,11 +56,15 @@ public class AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.View
     public void onBindViewHolder(@NonNull AdapteronlyImage.ViewHolder2 holder, int position) {
 
 
+if (stat==0)
+{
 
-        Glide.with(mContext).load("http://"+listoffer.get(position))
-                .into(holder.imageView);
-        holder.progressBar.setVisibility(View.GONE);
-
+}
+else {
+    Glide.with(mContext).load("http://" + listoffer.get(position))
+            .into(holder.imageView);
+    holder.progressBar.setVisibility(View.GONE);
+}
 
     }
 

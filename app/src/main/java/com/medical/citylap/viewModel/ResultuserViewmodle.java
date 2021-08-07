@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 public class ResultuserViewmodle extends ViewModel {
 
     MutableLiveData<ResultApi> resultmutbel=new MediatorLiveData<>();
-
+    //from api
     public  MutableLiveData<ResultApi> getResultuser(String token)
     {
 
@@ -43,4 +43,8 @@ public class ResultuserViewmodle extends ViewModel {
        });
 return resultmutbel;
     }
+    //from local
+
+    
+
 }

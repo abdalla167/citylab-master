@@ -56,7 +56,7 @@ import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment {
-    Button result,booking,aboutus,seealloffer,suger,prusioer,perfectwight;
+    Button result,booking,aboutus,seealloffer,suger,prusioer,perfectwight,medicalinformation;
     ImageView offer_one,offer_two,public_advice;
     TextView title_one,tile_two,start_one,start_two,end_one,end_two,pric_old_one,price_old_two,price_new_one,price_new_two,no_offer_one,no_ffer_two;
     Datum datum1;
@@ -197,43 +197,48 @@ public static Fragment fragment=new Offerfragment();
 
 
 
-        Animation animation12 = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
-        animation12.setInterpolator(new LinearInterpolator());
-        animation12.setRepeatCount(Animation.INFINITE);
-        animation12.setDuration(1500);
-        result.startAnimation(animation12);
-        Animation animation13 = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
-        animation13.setInterpolator(new LinearInterpolator());
-        animation13.setRepeatCount(Animation.INFINITE);
-        animation13.setDuration(1500);
-        booking.startAnimation(animation13);
-        Animation animation14 = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
-        animation14.setInterpolator(new LinearInterpolator());
-        animation14.setRepeatCount(Animation.INFINITE);
-        animation14.setDuration(1500);
-        aboutus.startAnimation(animation14);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
+
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        result.startAnimation(animation);
+
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        booking.startAnimation(animation);
+
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        aboutus.startAnimation(animation);
 
 
 
 
-        Animation animation1 = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
-        animation1.setInterpolator(new LinearInterpolator());
-        animation1.setRepeatCount(Animation.INFINITE);
-        animation1.setDuration(1500);
-        suger.startAnimation(animation1);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        suger.startAnimation(animation);
 
-        Animation animation2 = AnimationUtils.loadAnimation(myContext, R.anim.side_slide);
-        animation2.setInterpolator(new LinearInterpolator());
-        animation2.setRepeatCount(Animation.INFINITE);
-        animation2.setDuration(1500);
-        perfectwight.startAnimation(animation2);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        perfectwight.startAnimation(animation);
 
 
-        Animation animation3 = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
-        animation3.setInterpolator(new LinearInterpolator());
-        animation3.setRepeatCount(Animation.INFINITE);
-        animation3.setDuration(1500);
-        prusioer.startAnimation(animation3);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        prusioer.startAnimation(animation);
+
+
+
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setDuration(1500);
+        medicalinformation.startAnimation(animation);
 
 
      return view;
@@ -260,7 +265,7 @@ public static Fragment fragment=new Offerfragment();
         price_new_one = view.findViewById(R.id.new_pric_one_id);
         price_new_two = view.findViewById(R.id.new_pric_two_id);
         numbercheck=0;
-
+        medicalinformation=view.findViewById(R.id.medical_information);
         no_ffer_two=view.findViewById(R.id.text_two);
         no_offer_one=view.findViewById(R.id.text_one);
         sliderView = view.findViewById(R.id.imageSlider);

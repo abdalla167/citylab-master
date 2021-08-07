@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Resultss {
+
     @SerializedName("files")
     private List<String> mFiles;
     @SerializedName("mediaType")
@@ -15,10 +16,16 @@ public class Resultss {
     private String mPhoneNumber;
     @SerializedName("resultId")
     private Long mResultId;
+    @SerializedName("uploadDate")
+    private String uploadDate;
 
+    public String getUploadDate() {
+        return uploadDate;
+    }
 
-
-
+    public void setUploadDate(String uploadDate) {
+        this.uploadDate = uploadDate;
+    }
 
     public List<String> getFiles() {
         return mFiles;

@@ -59,7 +59,7 @@ public class ResultActivty extends AppCompatActivity {
             //LoadingDialog.showDialog(this);
             progressBar.setVisibility(View.VISIBLE);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapterResult=new AdapterResult(this);
+            adapterResult=new AdapterResult(this,1);
             resultuserViewmodle= ViewModelProviders.of(this).get(ResultuserViewmodle.class);
             resultuserViewmodle.getResultuser(SplashScreen.token_user).observe(this, new Observer<ResultApi>() {
                 @Override
@@ -72,7 +72,8 @@ public class ResultActivty extends AppCompatActivity {
                     }
                     Log.d("TAG", "onResponse:result: "+SplashScreen.token_user);
                     for(int i=0;i<resultApi.getData().size();i++)
-                    {Resultcopy re=new Resultcopy();
+                    {
+                        Resultcopy re=new Resultcopy();
                         listofresultapi.add(re);
                     }
                     Collections.reverse(resultApi.getData());
@@ -90,7 +91,6 @@ public class ResultActivty extends AppCompatActivity {
             imgview.setVisibility(View.VISIBLE);
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
-        LoadingDialog.hideDialog();
 
         imageView_back.setOnClickListener(new View.OnClickListener() {
             @Override
