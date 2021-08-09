@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -24,9 +25,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.medical.citylap.Adapter.AdapterResult;
 import com.medical.citylap.R;
 import com.medical.citylap.helperfunction.LoadingDialog;
+import com.medical.citylap.modles.CashModelSave;
 import com.medical.citylap.modles.Result;
 import com.medical.citylap.modles.ResultApi;
 import com.medical.citylap.modles.Resultcopy;
@@ -34,6 +38,7 @@ import com.medical.citylap.modles.Resultss;
 import com.medical.citylap.viewModel.ResultuserViewmodle;
 import com.ramotion.cardslider.CardSnapHelper;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -48,6 +53,8 @@ public class ResultActivty extends AppCompatActivity {
     ImageView imgview;
     ImageView imageView_back;
     ProgressBar progressBar;
+    public ArrayList<CashModelSave> cashModelSaveslist;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +93,21 @@ public class ResultActivty extends AppCompatActivity {
 
         }
         else {
-            mRecyclerView.setVisibility(View.GONE);
-            tvView.setVisibility(View.VISIBLE);
-            imgview.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+//            mRecyclerView.setVisibility(View.GONE);
+//            tvView.setVisibility(View.VISIBLE);
+//            imgview.setVisibility(View.VISIBLE);
+//            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapterResult=new AdapterResult(this,0);
+             loadData();
+            for(int i=0;i<cashModelSaveslist.size();i++)
+            {
+                Resultcopy re=new Resultcopy();
+                listofresultapi.add(re);
+            }
+            adapterResult.setlist1(listofresultapi);
+            mRecyclerView.setAdapter(adapterResult);
+            progressBar.setVisibility(View.GONE);
         }
 
         imageView_back.setOnClickListener(new View.OnClickListener() {
@@ -122,8 +140,6 @@ public class ResultActivty extends AppCompatActivity {
         }
         return connected;
     }
-
-
 
     public boolean popFragment() {
         boolean isPop = false;
@@ -164,10 +180,6 @@ public class ResultActivty extends AppCompatActivity {
 
     }
 
-
-
-
-
     public void switchContent(int id, Fragment fragment,boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -184,4 +196,17 @@ public class ResultActivty extends AppCompatActivity {
         transaction.commit();
         getSupportFragmentManager().executePendingTransactions();
     }
+    private void loadData() {
+cashModelSaveslist=new ArrayList<>();
+        SharedPreferences sharedPref = getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
+        String retrivedphonenumber = sharedPref.getString("phonenumberuser", null);
+
+        Gson gson = new Gson();
+        String json = sharedPref.getString(retrivedphonenumber, null);
+        Type type = new TypeToken<ArrayList<CashModelSave>>() {
+        }.getType();
+        cashModelSaveslist = gson.fromJson(json, type);
+
+    }
+
 }

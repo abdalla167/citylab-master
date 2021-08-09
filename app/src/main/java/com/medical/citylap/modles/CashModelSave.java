@@ -8,12 +8,29 @@ public class CashModelSave {
     int id;
     String nametest;
 
+    public List<String> getFile() {
+        return file;
+    }
+
+    public void setFile(List<String> file) {
+        this.file = file;
+    }
+
+    List<String>file;
+
     public String getNametest() {
         return nametest;
     }
 
     public void setNametest(String nametest) {
         this.nametest = nametest;
+    }
+
+    public CashModelSave(int type, int id, String nametest, List<String> file) {
+        this.type = type;
+        this.id = id;
+        this.nametest = nametest;
+        this.file = file;
     }
 
     public CashModelSave(int type, String path, int id, String nametest) {

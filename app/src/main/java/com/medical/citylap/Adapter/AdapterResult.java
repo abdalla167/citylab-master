@@ -71,7 +71,13 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
     ArrayList<Resultcopy> re = new ArrayList<>();
     int network;
     String date;
+    public void setlist1( ArrayList<Resultcopy> re) {
+        this.re = re;
+        this.cashModelSaveslist = new ArrayList<CashModelSave>();
+        loadData();
+        notifyDataSetChanged();
 
+    }
     public void setlist2(ResultApi resultApi, ArrayList<Resultcopy> re) {
         this.resultApi = resultApi;
         this.re = re;
@@ -97,10 +103,13 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull AdapterResult.ViewHolder2 holder, int position) {
 
-
         boolean isExpand = re.get(position).isExpand();
+        if(network==1)
+        {holder.typetest.setText(resultApi.getData().get(position).getNotes().toString());
+        }
         holder.layout.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-        if (isExpand = re.get(position).isExpand() == false) {
+        if (isExpand = re.get(position).isExpand() == false)
+        {
             holder.imageViewmax.setImageResource(R.drawable.ic_baseline_add_24);
         }
         else {
@@ -190,13 +199,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                 }
                 // if is images
                 if (resultApi.getData().get(position).getMediaType() == 0) {
-                    if (network == 0) {
-//                    holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-//                    holder.adapter = new AdapteronlyImage(mContext,0);
-//                    holder.adapter.setlist(resultApi.getData().get(position).getFiles());
-//                    holder.recycler.setAdapter(holder.adapter);
-                    }
-                    if (network == 1) {
+
                         holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         holder.adapter = new AdapteronlyImage(mContext, 1);
                         holder.adapter.setlist(resultApi.getData().get(position).getFiles());
@@ -214,14 +217,14 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                                             Integer.parseInt(String.valueOf(resultApi.getData().get(position).getResultId())));
                                     holder.downloadPdf.setClickable(false);
                                     Toast.makeText(mContext, "يتم بداء التحمبل الان", Toast.LENGTH_SHORT).show();
-                                    String path = "";
+                                    List<String>path=new ArrayList<>();
                                     for (int i = 0; i < resultApi.getData().get(position).getFiles().size(); i++) {
-                                        path = savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(i).trim(), 0);
+                                        path.add(savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(i).trim(), 0));
 
                                     }
-                                    cashModelSave = new CashModelSave(0, path,
+                                    cashModelSave = new CashModelSave(0,
                                             Integer.parseInt(String.valueOf(resultApi.getData().get(position).getResultId())),
-                                            resultApi.getData().get(position).getNotes() + "");
+                                            resultApi.getData().get(position).getNotes() + "",path);
                                     cashModelSaveslist.add(cashModelSave);
                                     SaveData();
                                     holder.downloadPdf.setClickable(true);
@@ -231,7 +234,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                             }
                         });
                     }
-                }
+
             }
             if(network==0)
             {
@@ -266,9 +269,9 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
 
             }
+            holder.imageViewmax.setImageResource(R.drawable.ic_baseline_minimize_24);
 
             }
-            holder.imageViewmax.setImageResource(R.drawable.ic_baseline_minimize_24);
             // if is pdf
 
         }
@@ -280,10 +283,11 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
 
         SharedPreferences sharedPref = mContext.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
+        String retrivedphonenumber = sharedPref.getString("phonenumberuser", null);
         SharedPreferences.Editor editor = sharedPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(cashModelSaveslist);
-        editor.putString("cashlist", json);
+        editor.putString(retrivedphonenumber, json);
         editor.apply();
 
 
@@ -291,8 +295,10 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
     private void loadData() {
         SharedPreferences sharedPref = mContext.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
+        String retrivedphonenumber = sharedPref.getString("phonenumberuser", null);
+
         Gson gson = new Gson();
-        String json = sharedPref.getString("cashlist", null);
+        String json = sharedPref.getString(retrivedphonenumber, null);
         Type type = new TypeToken<ArrayList<CashModelSave>>() {
         }.getType();
         cashModelSaveslist = gson.fromJson(json, type);
@@ -317,10 +323,14 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
     @Override
     public int getItemCount() {
-        if (resultApi.getData().size() > 0)
-            return resultApi.getData().size();
+        if(network==1) {
+            if (resultApi.getData().size() > 0)
+                return resultApi.getData().size();
+            else
+                return 0;
+        }
         else
-            return 0;
+            return cashModelSaveslist.size();
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
@@ -344,61 +354,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
             downloadPdf = itemView.findViewById(R.id.downloadpdf);
             dateinside = itemView.findViewById(R.id.history_of_rsult_id_inside_result);
             day = itemView.findViewById(R.id.day_item_inside_result);
-            linearLayout_pdf.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.R)
-                @Override
-                public void onClick(View v) {
-                    if (resultApi.getData().get(getAdapterPosition()).getMediaType() == 1) {
-//
-//                        final Dialog dialog = new Dialog(mContext);
-//                        dialog.setContentView(R.layout.custom_web_view);
-//                        WebView webView = dialog.findViewById(R.id.webview);
-//                        ImageView imageView_=dialog.findViewById(R.id.exist);
-//                              // Include dialog.xml file
-//                        final ProgressDialog pDialog = new ProgressDialog(mContext);
-//                        pDialog.setTitle("PDF");
-//                        pDialog.setMessage("Loading...");
-//                        pDialog.setIndeterminate(false);
-//                        pDialog.setCancelable(false);
-//                        dialog.show();
-//                        pDialog.show();
-//
-//                        webView.getSettings().setJavaScriptEnabled(true);
-//                        webView.setWebViewClient(new WebViewClient() {
-//                            @Override
-//                            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                                super.onPageStarted(view, url, favicon);
-//                                pDialog.show();
-//                            }
-//
-//                            @Override
-//                            public void onPageFinished(WebView view, String url) {
-//                                super.onPageFinished(view, url);
-//                                pDialog.dismiss();
-//                            }
-//                        });
-//                        webView.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + "http://" + resultApi.getData().get(getAdapterPosition()).getFiles().get(0));
-//                        pDialog.dismiss();
-//imageView_.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View v) {
-//        dialog.dismiss();
-//    }
-//});
 
-                    }
-//                    new DownloadPDF().
-//                            execute("http://"+resultApi.getData().get(getAdapterPosition()).getFiles().get(0).toString());
-//
-//
-//                    final Dialog dialog = new Dialog(mContext);
-//                    dialog.setContentView(R.layout.custompdfview);       // Include dialog.xml file
-//                    dialog.show();      // Include dialog.xml file
-//                    PDFView PDF=dialog.findViewById(R.id.pdfView);
-//
-
-                }
-            });
 
             imageViewmax.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -414,7 +370,9 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
     private void fragmentJump(String link, int net) {
 
-        Fragment mFragment = new PDF_Fragment(link);
+
+        Fragment mFragment = new PDF_Fragment(link,net);
+
         Bundle mBundle = new Bundle();
 
         mFragment.setArguments(mBundle);

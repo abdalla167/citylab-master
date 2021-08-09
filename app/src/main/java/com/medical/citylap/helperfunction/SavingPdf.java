@@ -44,7 +44,7 @@ public class SavingPdf {
         if(type==0)
         {
             //Image
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/تحاليل صور معمل المدينه"+"/"+retrivedphonenumber+"/"+id);
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/image"+"/"+retrivedphonenumber+"/"+id);
             String path = String.valueOf(resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues));
             File folder = new File(path);
             boolean isCreada = folder.exists();
@@ -57,16 +57,16 @@ public class SavingPdf {
             String cookie = CookieManager.getInstance().getCookie(uri);
             request.addRequestHeader("cookie", cookie);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES ,"/تحاليل صور معمل المدينه"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".png" );
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES ,"/image"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".png" );
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
 
-           return "/تحاليل صور معمل المدينه"+"/"+retrivedphonenumber+"/"+id;
+           return "/image"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".png";
         }
         else
         {
             //Documnet
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/تحاليل ملفات معمل المدينه"+"/"+retrivedphonenumber+"/"+id);
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/file"+"/"+retrivedphonenumber+"/"+id);
             String path = String.valueOf(resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues));
             File folder = new File(path);
             boolean isCreada = folder.exists();
@@ -79,11 +79,11 @@ public class SavingPdf {
             String cookie = CookieManager.getInstance().getCookie(uri);
             request.addRequestHeader("cookie", cookie);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES  ,"/تحاليل ملفات معمل المدينه"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".pdf"  );
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES  ,"/file"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".pdf"  );
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
             Toast.makeText(context, "يتم بداء التحمبل الان", Toast.LENGTH_SHORT).show();
-return "/تحاليل ملفات معمل المدينه"+"/"+retrivedphonenumber+"/"+id;
+            return  "/file"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".pdf" ;
         }
 
     }
