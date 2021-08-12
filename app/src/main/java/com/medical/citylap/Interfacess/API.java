@@ -6,6 +6,7 @@ import com.medical.citylap.modles.ResultApi;
 import com.medical.citylap.modles.SimpleResponse;
 import com.medical.citylap.modles.UsersResponse;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -28,7 +29,7 @@ public interface API {
 
     @GET("api/Results/All")
     @Headers("Accept:application/json")
-    public Call<ResultApi>getResults(@Header("Authorization") String token);
+    public Single<ResultApi> getResults(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("api/Users/Register")

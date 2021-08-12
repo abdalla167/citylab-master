@@ -14,6 +14,9 @@ import com.medical.citylap.modles.ResultApi;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,20 +30,10 @@ public class ResultuserViewmodle extends ViewModel {
     public  MutableLiveData<ResultApi> getResultuser(String token)
     {
 
-       RetrofitClint.getInstance().getResults("Bearer "+token).enqueue(new Callback<ResultApi>() {
-           @Override
-           public void onResponse(Call<ResultApi> call, Response<ResultApi> response) {
-               if (response.isSuccessful()) {
-                   if (response.body().getData() != null)
-                       resultmutbel.setValue(response.body());
-                   //Log.d(TAG, "onResponse: "+response.body().getStatus());
-               }
-           }
-           @Override
-           public void onFailure(Call<ResultApi> call, Throwable t) {
+        Single<ResultApi> single= RetrofitClint.getInstance().getResults("Bearer "+token).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-           }
-       });
+        single.subscribe(o->resultmutbel.setValue(o));
 return resultmutbel;
     }
     //from local
