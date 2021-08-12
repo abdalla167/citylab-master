@@ -146,6 +146,7 @@
         android:text="نتائج التحاليل الخاصه بك تم تحميلها علي هيئه ملف PDF"
         android:textSize="15sp"
         android:textColor="#3E5DFA"
+        android:paddingRight="@dimen/_20sdp"
         android:visibility="gone"
         android:fontFamily="@font/cairo_semibold"
         app:layout_constraintBottom_toBottomOf="parent"

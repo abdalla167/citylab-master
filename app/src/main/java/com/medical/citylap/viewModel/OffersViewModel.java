@@ -26,9 +26,6 @@ public class OffersViewModel extends ViewModel {
             public void onResponse(Call<AllOffer> call, Response<AllOffer> response) {
                 if(response.isSuccessful()) {
                     allOfferMediatorLiveData.setValue(response.body());
-                    //  Log.e("offerfragment", "onResponse: "+response.body().getData() );
-                    //  Log.d("offerfragment", "onResponse: "+response.body(). getData().get(0).getTitle());
-                    // Log.v("offerfragment", "onResponse: "+response.body().getMessage());
                 }
             }
 

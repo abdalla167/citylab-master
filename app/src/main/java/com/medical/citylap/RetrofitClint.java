@@ -11,7 +11,6 @@ import com.medical.citylap.modles.UsersResponse;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 public class RetrofitClint {
 
     private static final String BASE_URL  = "http://citylab123-001-site1.htempurl.com/";

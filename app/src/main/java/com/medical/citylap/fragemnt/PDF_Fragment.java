@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.google.firebase.BuildConfig;
 import com.medical.citylap.R;
@@ -34,6 +35,9 @@ import com.medical.citylap.activity.ResultActivty;
 
 import java.io.File;
 import java.nio.file.Files;
+
+import static android.os.Environment.DIRECTORY_DOCUMENTS;
+import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class PDF_Fragment extends Fragment {
 
@@ -71,8 +75,6 @@ PDFView pdfView;
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
         pDialog.show();
-
-
 
         WebView webView = view.findViewById(R.id.webview);
         ImageView imageView_=view.findViewById(R.id.exist);
@@ -150,10 +152,24 @@ imageView_.setOnClickListener(new View.OnClickListener() {
 //            }
 //            Log.v("TAG", "view() Method completed ");
 
+            webView.setVisibility(View.GONE);
+            pdfView.setVisibility(View.VISIBLE);
+            Log.d("TAG", "fil--"+Environment.getExternalStorageDirectory()+ DIRECTORY_DOCUMENTS+link);
+            File pdfFile = new File(Environment.getStorageDirectory(), DIRECTORY_DOCUMENTS+link );  // -> filename = maven.pdf
+            //Uri path = Uri.fromFile(pdfFile);
+            Log.d("TAG", "filpath---"+pdfFile);
 
-//
-//            File pdfFile = new File(Environment.DIRECTORY_PICTURES + link);  // -> filename = maven.pdf
-//            Uri path = Uri.fromFile(pdfFile);
+
+
+
+
+            pdfView.fromFile(pdfFile).onLoad(new OnLoadCompleteListener() {
+                @Override
+                public void loadComplete(int nbPages) {
+                    Log.d("TAG", "loadComplete: ");
+                }
+            }).load();
+
 //            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
 //            pdfIntent.setDataAndType(path, "application/pdf");
 //            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -164,19 +180,20 @@ imageView_.setOnClickListener(new View.OnClickListener() {
 //                Toast.makeText(getContext(), "No Application available to view PDF", Toast.LENGTH_SHORT).show();
 //            }
 
+//            Log.d("TAG", "onCreateView:pdf "+Environment.DIRECTORY_PICTURES+ link);
+//            webView.setVisibility(View.GONE);
+//            pdfView.setVisibility(View.VISIBLE);
+//
+//            File file=new File(Environment.DIRECTORY_PICTURES, link);
+//            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
+//                @Override
+//                public void loadComplete(int nbPages) {
+//                    pDialog.dismiss();
+//                    Toast.makeText(getContext(), String.valueOf(nbPages), Toast.LENGTH_LONG).show();
+//                    Log.d("TAG", "loadComplete: ");
+//                }
+//            }).load();
 
-            Log.d("TAG", "onCreateView:pdf "+Environment.DIRECTORY_PICTURES+ link);
-            webView.setVisibility(View.GONE);
-            pdfView.setVisibility(View.VISIBLE);
-            File file=new File(Environment.DIRECTORY_PICTURES, link);
-            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
-                @Override
-                public void loadComplete(int nbPages) {
-                    pDialog.dismiss();
-                    Toast.makeText(getContext(), String.valueOf(nbPages), Toast.LENGTH_LONG).show();
-                    Log.d("TAG", "loadComplete: ");
-                }
-            }).load();
 pDialog.dismiss();
         }
         return  view;
