@@ -67,7 +67,7 @@ PDFView pdfView;
                              Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.fragment_p_d_f_, container, false);
-
+        hasPermissions(getContext(),PERMISSIONS);
 
         ProgressDialog pDialog = new ProgressDialog(getContext());
         pDialog.setTitle("PDF");
@@ -80,7 +80,7 @@ PDFView pdfView;
         ImageView imageView_=view.findViewById(R.id.exist);
          pdfView=view.findViewById(R.id.pdfview);
         // Include dialog.xml file
-
+        request(view);
 imageView_.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -118,57 +118,22 @@ imageView_.setOnClickListener(new View.OnClickListener() {
         {
             pDialog.show();
 
-//            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, 112);
-//
-//
-//            if (!hasPermissions(getContext(), PERMISSIONS)) {
-//
-//                Log.v("TAG", "download() Method DON'T HAVE PERMISSIONS ");
-//
-//                Toast t = Toast.makeText(getContext(), "You don't have read access !", Toast.LENGTH_LONG);
-//                t.show();
-//
-//            } else {
-//                File d = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);  // -> filename = maven.pdf
-//                File pdfFile = new File(d, "maven.pdf");
-//
-//                Log.v("TAG", "view() Method pdfFile " + pdfFile.getAbsolutePath());
-//
-//                Uri path = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".fileprovider", pdfFile);
-//
-//
-//                Log.v("TAG", "view() Method path " + path);
-//
-//                Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-//                pdfIntent.setDataAndType(path, "application/pdf");
-//                pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//
-//                try {
-//                    startActivity(pdfIntent);
-//                } catch (ActivityNotFoundException e) {
-//                    Toast.makeText(getContext(), "No Application available to view PDF", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            Log.v("TAG", "view() Method completed ");
-
-            webView.setVisibility(View.GONE);
-            pdfView.setVisibility(View.VISIBLE);
-            Log.d("TAG", "fil--"+Environment.getExternalStorageDirectory()+ DIRECTORY_DOCUMENTS+link);
-            File pdfFile = new File(Environment.getStorageDirectory(), DIRECTORY_DOCUMENTS+link );  // -> filename = maven.pdf
-            //Uri path = Uri.fromFile(pdfFile);
-            Log.d("TAG", "filpath---"+pdfFile);
 
 
 
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+ DIRECTORY_PICTURES+ link);
+            Intent target = new Intent(Intent.ACTION_VIEW);
+            target.setDataAndType(Uri.fromFile(file),"application/pdf");
+            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            Intent intent = Intent.createChooser(target, "Open File");
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                // Instruct the user to install a PDF reader here, or something
+            }
 
 
-            pdfView.fromFile(pdfFile).onLoad(new OnLoadCompleteListener() {
-                @Override
-                public void loadComplete(int nbPages) {
-                    Log.d("TAG", "loadComplete: ");
-                }
-            }).load();
 
 //            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
 //            pdfIntent.setDataAndType(path, "application/pdf");
@@ -204,5 +169,7 @@ pDialog.dismiss();
         ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, 112);
 
     }
+
+
 
 }

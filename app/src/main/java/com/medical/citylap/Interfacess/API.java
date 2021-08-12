@@ -27,6 +27,10 @@ public interface API {
     @GET("api/offers/all")
     public Single<AllOffer>offers();
 
+
+    @GET("api/offers/all")
+    public Call<AllOffer>offers_();
+
     @GET("api/Results/All")
     @Headers("Accept:application/json")
     public Single<ResultApi> getResults(@Header("Authorization") String token);

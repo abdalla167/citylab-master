@@ -46,6 +46,10 @@ public Call<Loginmodle>userlogin(String login , String token)
     return apiApi.userlogin(login , token);
 
 }
+public Call<AllOffer>getoffer_()
+{
+    return apiApi.offers_();
+}
 public Call<SimpleResponse>usersignup(String name, String phonenumber, String token)
 {
 

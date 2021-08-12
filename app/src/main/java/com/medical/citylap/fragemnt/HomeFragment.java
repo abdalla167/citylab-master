@@ -68,8 +68,6 @@ public class HomeFragment extends Fragment {
     public  int numbercheck;
     int number;
     SliderView sliderView;
-    AllOffer allOffer=new AllOffer();
-
     private SliderAdapterExample adapter;
 public static Fragment fragment=new Offerfragment();
     MyPreference session;
@@ -279,49 +277,65 @@ public static Fragment fragment=new Offerfragment();
     }
     public int setnewoffers()
     {
-        b.putBoolean("isLoaded" , true);
-        Single <AllOffer> single=RetrofitClint.getInstance().getoffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-        single.subscribe(o->allOffer.setData(o.getData()));
-        if (allOffer.getData().size() > 0) {
-            if (allOffer.getData().size() == 1) {
-                datum1 = allOffer.getData().get(allOffer.getData().size() - 1);
-                if (myContext !=null)
-                    Glide.with(myContext).load("http://" + datum1.getFiles().get(0))
-                            .into(offer_two);
-                tile_two.setText(datum1.getTitle());
-                start_two.setText(datum1.getStartTime().split(" ")[0]);
-                end_two.setText(datum1.getEndTime().split(" ")[0]);
-                price_old_two.setText(datum1.getPreviousPrice().toString());
-                price_new_two.setText(datum1.getCurrentPrice().toString());
-                no_ffer_two.setVisibility(View.GONE);
-            }
+//
+//        Single <AllOffer> single=RetrofitClint.getInstance().getoffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+//        AllOffer allOffer=new AllOffer()l
+//        single.subscribe(o->)
+//
+  
+
+            RetrofitClint.getInstance().getoffer_().enqueue(new Callback<AllOffer>() {
+                @Override
+                public void onResponse(Call<AllOffer> call, Response<AllOffer> response) {
+                    if (response.isSuccessful()) {
 
 
-            if (allOffer.getData().size() > 1) {
-                datum1 = allOffer.getData().get(allOffer.getData().size() - 1);
-                datum2 = allOffer.getData().get(allOffer.getData().size() - 2);
-                if (myContext !=null)
-                    Glide.with(myContext).load("http://" + datum1.getFiles().get(0))
-                            .into(offer_two);
-                tile_two.setText(datum1.getTitle());
-                start_two.setText(datum1.getStartTime().split(" ")[0]);
-                end_two.setText(datum1.getEndTime().split(" ")[0]);
-                price_old_two.setText(datum1.getPreviousPrice().toString());
-                price_new_two.setText(datum1.getCurrentPrice().toString());
-                if (myContext !=null)
-                    Glide.with(myContext).load("http://" + datum2.getFiles().get(0))
-                            .into(offer_one);
-                title_one.setText(datum2.getTitle());
-                start_one.setText(datum2.getStartTime().split(" ")[0]);
-                end_one.setText(datum2.getEndTime().split(" ")[0]);
-                pric_old_one.setText(datum2.getPreviousPrice().toString());
-                price_new_one.setText(datum2.getCurrentPrice().toString());
-                no_ffer_two.setVisibility(View.GONE);
-                no_offer_one.setVisibility(View.GONE);
-            }
-        }
+                        b.putBoolean("isLoaded" , true);
+
+                        if (response.body().getData().size() > 0) {
+                            if (response.body().getData().size() == 1) {
+                                datum1 = response.body().getData().get(response.body().getData().size() - 1);
+                                if (myContext !=null)
+                                Glide.with(myContext).load("http://" + datum1.getFiles().get(0))
+                                        .into(offer_two);
+                                tile_two.setText(datum1.getTitle());
+                                start_two.setText(datum1.getStartTime().split(" ")[0]);
+                                end_two.setText(datum1.getEndTime().split(" ")[0]);
+                                price_old_two.setText(datum1.getPreviousPrice().toString());
+                                price_new_two.setText(datum1.getCurrentPrice().toString());
+                                no_ffer_two.setVisibility(View.GONE);
+                            }
 
 
+                            if (response.body().getData().size() > 1) {
+                                datum1 = response.body().getData().get(response.body().getData().size() - 1);
+                                datum2 = response.body().getData().get(response.body().getData().size() - 2);
+                                if (myContext !=null)
+                                Glide.with(myContext).load("http://" + datum1.getFiles().get(0))
+                                        .into(offer_two);
+                                tile_two.setText(datum1.getTitle());
+                                start_two.setText(datum1.getStartTime().split(" ")[0]);
+                                end_two.setText(datum1.getEndTime().split(" ")[0]);
+                                price_old_two.setText(datum1.getPreviousPrice().toString());
+                                price_new_two.setText(datum1.getCurrentPrice().toString());
+                                if (myContext !=null)
+                                Glide.with(myContext).load("http://" + datum2.getFiles().get(0))
+                                        .into(offer_one);
+                                title_one.setText(datum2.getTitle());
+                                start_one.setText(datum2.getStartTime().split(" ")[0]);
+                                end_one.setText(datum2.getEndTime().split(" ")[0]);
+                                pric_old_one.setText(datum2.getPreviousPrice().toString());
+                                price_new_one.setText(datum2.getCurrentPrice().toString());
+                                no_ffer_two.setVisibility(View.GONE);
+                                no_offer_one.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<AllOffer> call, Throwable t) {
+                }
+            });
 return  numbercheck;
     }
     public void addNewItem(View view) {
