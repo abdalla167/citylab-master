@@ -52,7 +52,7 @@ public Call<SimpleResponse>usersignup(String name, String phonenumber, String to
     return apiApi.addUser(name,phonenumber, token);
 }
 
-public  Call<AllOffer>getoffer()
+public  Single<AllOffer>getoffer()
 {
     return  apiApi.offers();
 

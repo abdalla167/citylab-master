@@ -25,7 +25,7 @@ public interface API {
                                      @Field("deviceToken") String token);
 
     @GET("api/offers/all")
-    public Call<AllOffer>offers();
+    public Single<AllOffer>offers();
 
     @GET("api/Results/All")
     @Headers("Accept:application/json")
