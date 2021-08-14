@@ -8,13 +8,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SavingPdf {
 
@@ -73,18 +80,22 @@ public class SavingPdf {
             if(!isCreada) {
                 folder.mkdirs();
             }
-            @SuppressLint({"NewApi", "LocalSuppress"}) DownloadManager.Request request = new DownloadManager.Request(Uri.parse(uri));
+            @SuppressLint({"NewApi", "LocalSuppress"})
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(uri));
             request.setTitle(titel);
+
             request.setDescription("تحميل الملف برجاء الانتظار .......");
             String cookie = CookieManager.getInstance().getCookie(uri);
             request.addRequestHeader("cookie", cookie);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES  ,"/file"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".pdf"  );
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
             Toast.makeText(context, "يتم بداء التحمبل الان", Toast.LENGTH_SHORT).show();
-            return  "/file"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".pdf" ;
+            return  "/file"+"/"+retrivedphonenumber+"/"+id+"/"+titel+".pdf";
         }
 
     }
+
 }

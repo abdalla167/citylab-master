@@ -25,7 +25,8 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
-public class AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.ViewHolder2> {
+public class
+AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.ViewHolder2> {
 
 
     List<String> listoffer=new ArrayList<>();

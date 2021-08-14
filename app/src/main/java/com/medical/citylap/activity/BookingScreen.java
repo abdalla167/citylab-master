@@ -225,8 +225,6 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
                     linearLayout.setVisibility(View.VISIBLE);
                     type = 1;
                 }
-
-
             }
         });
         buttongetimage.setOnClickListener(new View.OnClickListener() {
@@ -418,7 +416,6 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
 
             String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
 
-            //add image to adapter
             files.add(new FileData(thumbnail, sImage));
 
             imageView.setImageBitmap(files.get(0).getBitmap());
@@ -429,6 +426,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageBitmap(fileData.getBitmap());
             imageBase64=sImage;
+
         }
 
     }

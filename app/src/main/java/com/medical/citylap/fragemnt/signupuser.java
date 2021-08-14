@@ -59,6 +59,8 @@ public class signupuser extends Fragment {
         loButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                loButton.setClickable(false);
                RetrofitClint.getInstance().usersignup(name.getText().toString(),password.getText().toString() , SplashScreen.deviceToken).enqueue(new Callback<SimpleResponse>() {
                    @Override
                    public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
@@ -83,7 +85,8 @@ public class signupuser extends Fragment {
 
                    }
                });
-                }
+            loButton.setClickable(true);
+            }
         });
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

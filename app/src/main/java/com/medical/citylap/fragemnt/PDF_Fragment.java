@@ -10,8 +10,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
@@ -29,27 +32,35 @@ import android.widget.Toast;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.source.DocumentSource;
 import com.google.firebase.BuildConfig;
 import com.medical.citylap.R;
 import com.medical.citylap.activity.ResultActivty;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.os.Environment.DIRECTORY_DOCUMENTS;
 import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class PDF_Fragment extends Fragment {
-
+    ProgressDialog pDialog;
  String link;
 int stat;
 PDFView pdfView;
+    private static final int PERMISSION_REQUEST_CODE = 200;
+
     public PDF_Fragment(String link,int stat) {
         // Required empty public constructor
         this.link=link;
         this.stat=stat;
     }
-    private static final String[] PERMISSIONS = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final String[] PERMISSIONS = {READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
 
     private static boolean hasPermissions(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
@@ -65,6 +76,7 @@ PDFView pdfView;
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,7 +84,7 @@ PDFView pdfView;
         View view= inflater.inflate(R.layout.fragment_p_d_f_, container, false);
         hasPermissions(getContext(),PERMISSIONS);
 
-        ProgressDialog pDialog = new ProgressDialog(getContext());
+        pDialog = new ProgressDialog(getContext());
         pDialog.setTitle("PDF");
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -90,6 +102,10 @@ imageView_.setOnClickListener(new View.OnClickListener() {
         startActivity(new Intent(getActivity(), ResultActivty.class));
     }
 });
+        if (checkPermission()) {
+        } else {
+            requestPermission();
+        }
         if (stat==1) {
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setWebViewClient(new WebViewClient() {
@@ -119,52 +135,52 @@ imageView_.setOnClickListener(new View.OnClickListener() {
         }
         else
         {
+
             pDialog.show();
+            webView.setVisibility(View.GONE);
+            pdfView.setVisibility(View.VISIBLE);
+            File file= new File(Environment.getStorageDirectory()+"/"+DIRECTORY_PICTURES+"/"+link);
 
-
-
-
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+ DIRECTORY_PICTURES+ link);
-            Intent target = new Intent(Intent.ACTION_VIEW);
-            target.setDataAndType(Uri.fromFile(file),"application/pdf");
-            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-            Intent intent = Intent.createChooser(target, "Open File");
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                // Instruct the user to install a PDF reader here, or something
-            }
-
-
-
-//            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-//            pdfIntent.setDataAndType(path, "application/pdf");
-//            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//            try{
-//                startActivity(pdfIntent);
-//            }catch(ActivityNotFoundException e){
-//                Toast.makeText(getContext(), "No Application available to view PDF", Toast.LENGTH_SHORT).show();
-//            }
-
-//            Log.d("TAG", "onCreateView:pdf "+Environment.DIRECTORY_PICTURES+ link);
-//            webView.setVisibility(View.GONE);
-//            pdfView.setVisibility(View.VISIBLE);
-//
-//            File file=new File(Environment.DIRECTORY_PICTURES, link);
-//            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
-//                @Override
-//                public void loadComplete(int nbPages) {
-//                    pDialog.dismiss();
-//                    Toast.makeText(getContext(), String.valueOf(nbPages), Toast.LENGTH_LONG).show();
-//                    Log.d("TAG", "loadComplete: ");
-//                }
-//            }).load();
-
+            Log.d("TAG", "onCreateView: "+file.getPath());
+            pdfView.fromFile(new File(file.getAbsolutePath())).enableSwipe(true)
+                    .enableDoubletap(true)
+                    .defaultPage(0)
+                    .enableAnnotationRendering(true)
+                    .scrollHandle(null)
+                    .enableDoubletap(true)
+                    .load();
+//            Uri uri=FileProvider.getUriForFile(getActivity(),  getContext().getPackageName()+".fileprovider" ,file);
+//            Intent intent=new Intent(Intent.ACTION_MAIN,uri);
+//            intent.setDataAndType(uri,"application/pdf");
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            startActivityForResult(intent,0);
 pDialog.dismiss();
         }
         return  view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ( data != null && data.getData() != null && requestCode == 0 ){
+           Uri uri  = data.getData();
+           pdfView.fromUri(uri)
+                    .enableSwipe(true)
+                    .enableDoubletap(true)
+                    .defaultPage(0)
+                    .enableAnnotationRendering(true)
+                    .scrollHandle(null)
+                    .enableDoubletap(true)
+                    .load();
+
+        }
+        pDialog.dismiss();
+    }
+    private boolean checkPermission() {
+        // checking of permissions.
+        int permission1 = ContextCompat.checkSelfPermission(getContext(), WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getContext(), READ_EXTERNAL_STORAGE);
+        return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
     }
 
     public void request(View view) {
@@ -172,7 +188,29 @@ pDialog.dismiss();
         ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, 112);
 
     }
+    private void requestPermission() {
+        // requesting permissions if not provided.
+        ActivityCompat.requestPermissions(getActivity(), new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+
+                // after requesting permissions we are showing
+                // users a toast message of permission granted.
+                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (writeStorage && readStorage) {
+                    Toast.makeText(getContext(), "Permission Granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Permission Denined.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
 
 }

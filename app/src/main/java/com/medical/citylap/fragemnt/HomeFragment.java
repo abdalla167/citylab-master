@@ -32,12 +32,14 @@ import com.medical.citylap.RetrofitClint;
 import com.medical.citylap.activity.AboutUS;
 import com.medical.citylap.activity.Blood_activity;
 import com.medical.citylap.activity.BookingScreen;
+import com.medical.citylap.activity.MidecalInformation;
 import com.medical.citylap.activity.ResultActivty;
 import com.medical.citylap.activity.SplashScreen;
 import com.medical.citylap.activity.Suger_activity;
 import com.medical.citylap.activity.Wight_acticty;
 import com.medical.citylap.modles.AllOffer;
 import com.medical.citylap.modles.Datum;
+import com.medical.citylap.modles.MedicalInformationModel;
 import com.medical.citylap.modles.Result;
 import com.medical.citylap.modles.SliderItem;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -195,8 +197,7 @@ public static Fragment fragment=new Offerfragment();
         public_advice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(myContext, "التحديث القادم", Toast.LENGTH_SHORT).show();
-            }
+     startActivity(new Intent(getContext(), MidecalInformation.class));            }
         });
 
 

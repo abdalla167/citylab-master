@@ -91,8 +91,9 @@ public class LoginFragment extends Fragment {
              if(   CheckVaildData(password.getText().toString())==1)
              {
                  loButton.setBackgroundColor(Color.BLUE);
+                 loButton.setClickable(false);
                  loginfunction(password.getText().toString());
-
+loButton.setClickable(true);
              }
 
 
@@ -136,6 +137,7 @@ public class LoginFragment extends Fragment {
     }
     public void loginfunction(final String password)
     {
+
         progressBar.setVisibility(View.VISIBLE);
         RetrofitClint.getInstance().userlogin(password,SplashScreen.deviceToken).enqueue(new Callback<Loginmodle>() {
             @Override
