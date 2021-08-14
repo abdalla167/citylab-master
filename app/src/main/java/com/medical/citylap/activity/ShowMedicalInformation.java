@@ -48,7 +48,6 @@ ProgressBar progressBar;
             }
         })
                 .into(imageView);
-        Log.d("TAG", "onCreate: "+(medicalInformationModel.getImage().toString()));
         hid.setText(medicalInformationModel.getHide());
         cintent.setText(medicalInformationModel.getContent());
 
