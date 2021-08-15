@@ -60,9 +60,9 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     // of 4 different locations.
     Geocoder geo;
 
-    LatLng sydney = new LatLng(-3, 15);
-    LatLng TamWorth = new LatLng(-3.083332, 15.916672);
-    LatLng NewCastle = new LatLng(-3.916668, 15.750000);
+    LatLng sydney = new LatLng(29.613473238612904, 30.654309019446373);
+    LatLng TamWorth = new LatLng(29.891483056260487 , 31.261986941099167);
+    LatLng NewCastle = new LatLng(29.898009941244563, 31.26653596758842);
     LatLng Brisbane = new LatLng(-2.470125, 15.021072);
     private GoogleMap mMap;
     // creating array list for adding all our locations.

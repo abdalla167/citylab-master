@@ -3,6 +3,7 @@ package com.medical.citylap.Adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,12 @@ import com.bumptech.glide.Glide;
 import com.medical.citylap.R;
 import com.medical.citylap.modles.Datum;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class
 AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.ViewHolder2> {
@@ -33,6 +36,7 @@ AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.ViewHolder2> {
     private Context mContext;
     Uri uri;
     int stat;
+    File file;
     public void setlist(List<String> listOffer){
 
         this.listoffer=listOffer;
@@ -59,7 +63,11 @@ this.stat=stat;
 
 if (stat==0)
 {
-
+    file=new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)+"/"+listoffer.get( position));
+    Uri imgUri=Uri.fromFile(file);
+    holder.imageView.setImageURI(null);
+    holder.imageView.setImageURI(imgUri);
+    holder.progressBar.setVisibility(View.GONE);
 }
 else {
     Glide.with(mContext).load("http://" + listoffer.get(position))
@@ -110,7 +118,7 @@ else {
 
 
                  // Initializing the ViewPagerAdapter
-                 mViewPagerAdapter = new ViewPagerAdapter(mContext, listoffer);
+                 mViewPagerAdapter = new ViewPagerAdapter(mContext, listoffer,stat);
 
                  // Adding the Adapter to the ViewPager
                  viewPager.setAdapter(mViewPagerAdapter);

@@ -7,7 +7,21 @@
     android:background="#F8F6F6"
     tools:context=".activity.ShowMedicalInformation">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="5"
+    >
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="2"
+    >
+
     <ProgressBar
+        android:id="@+id/presser_bar_image_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,14 +29,12 @@
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.155"
-        android:id="@+id/presser_bar_image_show"
-        />
+        app:layout_constraintVertical_bias="0.591" />
 
     <ImageView
         android:id="@+id/image_show_medical"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/_10ssp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,11 +43,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.002" />
-
+</androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/hidlin_show"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
         android:layout_margin="@dimen/_10ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +69,8 @@
     <TextView
         android:id="@+id/content_show"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
         android:layout_margin="@dimen/_10ssp"
         android:background="@drawable/borderwhite"
         android:fontFamily="@font/cairo_semibold"
@@ -73,6 +87,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hidlin_show"
         app:layout_constraintVertical_bias="0.011" />
-
+</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

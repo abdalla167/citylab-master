@@ -180,7 +180,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                                 if (CheckIfExsit(cashModelSave2) == 1) {
                                     savingPdf = new SavingPdf(mContext, resultApi.getData().get(position).getNotes() + "",
                                             Integer.parseInt(String.valueOf(resultApi.getData().get(position).getResultId())));
-                                    String path = savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(0).trim(), 1);
+                                    String path = savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(0).trim(), 1,0);
                                     cashModelSave = new CashModelSave(1, path,
                                             Integer.parseInt(String.valueOf(resultApi.getData().get(position).getResultId())),
                                             resultApi.getData().get(position).getNotes() + "");
@@ -219,7 +219,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                                     Toast.makeText(mContext, "يتم بداء التحمبل الان", Toast.LENGTH_SHORT).show();
                                     List<String>path=new ArrayList<>();
                                     for (int i = 0; i < resultApi.getData().get(position).getFiles().size(); i++) {
-                                        path.add(savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(i).trim(), 0));
+                                        path.add(savingPdf.DownloadFile(resultApi.getData().get(position).getFiles().get(i).trim(), 0,i+1));
 
                                     }
                                     cashModelSave = new CashModelSave(0,
@@ -262,7 +262,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
                         holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         holder.adapter = new AdapteronlyImage(mContext, 0);
-                        holder.adapter.setlist(resultApi.getData().get(position).getFiles());
+                        holder.adapter.setlist(cashModelSaveslist.get(position).getFile());
                         holder.recycler.setAdapter(holder.adapter);
 
                     }
@@ -299,8 +299,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
         Gson gson = new Gson();
         String json = sharedPref.getString(retrivedphonenumber, null);
-        Type type = new TypeToken<ArrayList<CashModelSave>>() {
-        }.getType();
+        Log.d(TAG, "loadData: "+json);
+        Type type = new TypeToken<ArrayList<CashModelSave>>() {}.getType();
         cashModelSaveslist = gson.fromJson(json, type);
 
     }

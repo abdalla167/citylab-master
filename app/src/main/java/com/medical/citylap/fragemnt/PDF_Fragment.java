@@ -139,9 +139,7 @@ imageView_.setOnClickListener(new View.OnClickListener() {
             pDialog.show();
             webView.setVisibility(View.GONE);
             pdfView.setVisibility(View.VISIBLE);
-            File file= new File(Environment.getStorageDirectory()+"/"+DIRECTORY_PICTURES+"/"+link);
-
-            Log.d("TAG", "onCreateView: "+file.getPath());
+            File file= new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)+"/"+link);
             pdfView.fromFile(new File(file.getAbsolutePath())).enableSwipe(true)
                     .enableDoubletap(true)
                     .defaultPage(0)
@@ -149,11 +147,7 @@ imageView_.setOnClickListener(new View.OnClickListener() {
                     .scrollHandle(null)
                     .enableDoubletap(true)
                     .load();
-//            Uri uri=FileProvider.getUriForFile(getActivity(),  getContext().getPackageName()+".fileprovider" ,file);
-//            Intent intent=new Intent(Intent.ACTION_MAIN,uri);
-//            intent.setDataAndType(uri,"application/pdf");
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//            startActivityForResult(intent,0);
+
 pDialog.dismiss();
         }
         return  view;

@@ -71,6 +71,8 @@ public class ResultActivty extends AppCompatActivity {
             resultuserViewmodle.getResultuser(SplashScreen.token_user).observe(this, new Observer<ResultApi>() {
                 @Override
                 public void onChanged(ResultApi resultApi) {
+                    if (resultApi !=null)
+                    {
                     if(resultApi.getData().size()==0)
                     {
                         mRecyclerView.setVisibility(View.GONE);
@@ -88,6 +90,7 @@ public class ResultActivty extends AppCompatActivity {
                     mRecyclerView.setAdapter(adapterResult);
                     progressBar.setVisibility(View.GONE);
 
+                }
                 }
             });
 

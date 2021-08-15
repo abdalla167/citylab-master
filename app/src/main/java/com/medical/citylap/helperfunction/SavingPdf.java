@@ -36,7 +36,7 @@ public class SavingPdf {
         this.id=id;
     }
 
-    public String DownloadFile(String uri,int type)
+    public String DownloadFile(String uri,int type,int count)
     {
 
         SharedPreferences preferences3 = context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
@@ -64,11 +64,11 @@ public class SavingPdf {
             String cookie = CookieManager.getInstance().getCookie(uri);
             request.addRequestHeader("cookie", cookie);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES ,"/image"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".png" );
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES ,"/image"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+count+".png" );
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
 
-           return "/image"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+".png";
+           return "/image"+"/"+retrivedphonenumber+"/"+id+""+"/"+titel+count+".png";
         }
         else
         {

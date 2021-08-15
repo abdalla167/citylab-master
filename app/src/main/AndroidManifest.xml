@@ -58,7 +58,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.medical.citylap.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:readPermission="com.company.app.fileprovider.READ">
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -75,17 +85,7 @@
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logocitylab" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.medical.citylap.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            android:readPermission="com.company.app.fileprovider.READ">
-            >
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path" />
-        </provider>
+
     </application>
 
 </manifest>
