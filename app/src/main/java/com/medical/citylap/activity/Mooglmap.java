@@ -18,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,6 +58,8 @@ import java.util.Locale;
 public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     // below are the latitude and longitude
     // of 4 different locations.
+    Geocoder geo;
+
     LatLng sydney = new LatLng(-3, 15);
     LatLng TamWorth = new LatLng(-3.083332, 15.916672);
     LatLng NewCastle = new LatLng(-3.916668, 15.750000);
@@ -145,15 +148,6 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        // inside on map ready method
-        // we will be displaying all our markers.
-        // for adding markers we are running for loop and
-        // inside that we are drawing marker on our map.
-
-    }
 
     @Override
     protected void onStart() {
@@ -191,4 +185,46 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
         super.onStop();
         mapFragment.onStop();
     }
+
+
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        if (mMap != null) {
+            geo = new Geocoder(Mooglmap.this, Locale.getDefault());
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    try {
+                        if (geo == null)
+                            geo = new Geocoder(Mooglmap.this, Locale.getDefault());
+                        List<Address> address = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                        if (address.size() > 0) {
+                            mMap.addMarker(new MarkerOptions().position(latLng).title("Name:" + address.get(0).getCountryName()
+                                    + ". Address:" + address.get(0).getAddressLine(0)));
+
+//                            txtMarkers.setText("Name:" + address.get(0).getCountryName()
+//                                    + ". Address:" + address.get(0).getAddressLine(0));
+                        }
+                    } catch (IOException ex) {
+                        if (ex != null)
+                            Toast.makeText(Mooglmap.this, "Error:" + ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    Log.d("TAG", "onMarkerClick: "+marker.getTitle().toString() + " Lat:" + marker.getPosition().latitude + " Long:" + marker.getPosition().longitude);
+                    return false;
+                }
+            });
+        }
+
+    }
+
 }
