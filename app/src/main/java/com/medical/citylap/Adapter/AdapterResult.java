@@ -105,7 +105,9 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
         boolean isExpand = re.get(position).isExpand();
         if(network==1)
-        {holder.typetest.setText(resultApi.getData().get(position).getNotes().toString());
+        {
+            if(resultApi.getData().get(position).getNotes()!=null)
+            holder.typetest.setText(resultApi.getData().get(position).getNotes().toString()+"");
         }
         holder.layout.setVisibility(isExpand ? View.VISIBLE : View.GONE);
         if (isExpand = re.get(position).isExpand() == false)
