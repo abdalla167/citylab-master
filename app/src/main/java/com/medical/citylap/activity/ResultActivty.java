@@ -73,7 +73,7 @@ public class ResultActivty extends AppCompatActivity {
                 public void onChanged(ResultApi resultApi) {
                     if (resultApi !=null)
                     {
-                    if(resultApi.getData().size()==0)
+                    if(resultApi.getData()==null)
                     {
                         mRecyclerView.setVisibility(View.GONE);
                         tvView.setVisibility(View.VISIBLE);
@@ -103,13 +103,17 @@ public class ResultActivty extends AppCompatActivity {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapterResult=new AdapterResult(this,0);
              loadData();
-            for(int i=0;i<cashModelSaveslist.size();i++)
-            {
-                Resultcopy re=new Resultcopy();
-                listofresultapi.add(re);
-            }
-            adapterResult.setlist1(listofresultapi);
-            mRecyclerView.setAdapter(adapterResult);
+             if(cashModelSaveslist!=null) {
+                 for (int i = 0; i < cashModelSaveslist.size(); i++) {
+                     Resultcopy re = new Resultcopy();
+                     listofresultapi.add(re);
+                 }
+                 adapterResult.setlist1(listofresultapi);
+                 mRecyclerView.setAdapter(adapterResult);
+
+             }
+             else {                 Toast.makeText(this, "لايوجد بيانات", Toast.LENGTH_LONG).show();
+             }
             progressBar.setVisibility(View.GONE);
         }
 
@@ -200,7 +204,7 @@ public class ResultActivty extends AppCompatActivity {
         getSupportFragmentManager().executePendingTransactions();
     }
     private void loadData() {
-cashModelSaveslist=new ArrayList<>();
+        cashModelSaveslist=new ArrayList<>();
         SharedPreferences sharedPref = getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
         String retrivedphonenumber = sharedPref.getString("phonenumberuser", null);
 

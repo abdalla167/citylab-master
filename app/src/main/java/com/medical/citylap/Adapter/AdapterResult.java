@@ -191,7 +191,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                                 } else {
                                     Toast.makeText(mContext, "تم تحمل هذا الملف من قبل", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
+                            }
+                            else {
                                 Toast.makeText(mContext, "لا يوجد اتصال بالانترنت", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -316,7 +317,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
         for (int i = 0; i < cashModelSaveslist.size(); i++) {
             if (cashModelSaveslist.get(i).getId() == cashModelSave.getId())
                 return 0;
-
         }
 
         return 1;
