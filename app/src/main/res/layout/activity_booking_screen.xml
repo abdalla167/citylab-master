@@ -169,14 +169,14 @@ android:weightSum="3.5">
             android:fontFamily="@font/cairo_semibold"
             android:gravity="center|right|bottom"
             android:paddingRight="25dp"
-            android:text="السن"
+            android:text="الفرع"
             android:textColor="#2e3094"
             android:textSize="15sp"
 
             />
 
 
-        <EditText
+        <Spinner
             android:id="@+id/agecllint_booking_id"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -184,9 +184,8 @@ android:weightSum="3.5">
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/signup_bordershape"
-            android:hint="السن"
             android:textSize="@dimen/_10ssp"
-android:layout_gravity="center"
+            android:layout_gravity="center"
             android:gravity="center"
             android:inputType="number"
             android:textDirection="rtl"

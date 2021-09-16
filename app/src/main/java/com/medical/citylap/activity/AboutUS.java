@@ -72,4 +72,9 @@ imageView_what.setOnClickListener(new View.OnClickListener() {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }

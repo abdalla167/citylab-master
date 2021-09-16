@@ -27,6 +27,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -67,10 +69,13 @@ import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener , AdapterView.OnItemSelectedListener{
     Button buttongetimage, subment;
-    EditText name, phone, age;
+    EditText name, phone;
+    Spinner far3;
+    String location="";
     String sOffDate = "";
+    String[] far3_item = { "المنيب", "الجيزه", "الحومديه", "طريق 11", "المنوات"};
     DatePickerDialog.OnDateSetListener Date_booking;
     TextView textView_date;
     EditText address, number_bulding, number_floer, number_part;
@@ -104,6 +109,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_screen);
         inti();
+
         SharedPreferences preferences3 = BookingScreen.this.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
         String retrivedname_user = preferences3.getString("nameuserprofile", null);
         String retrivedphonenumber = preferences3.getString("phonenumberuser", null);
@@ -111,6 +117,11 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         phone.setText(retrivedphonenumber);
         initDateDialog();
         Date currentTime = Calendar.getInstance().getTime();
+        far3.setOnItemSelectedListener(BookingScreen.this);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,far3_item);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        far3.setAdapter(aa);
         imageViewback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +131,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         subment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (age.getText().toString().equals("") || textView_date.getText().toString().equals("")) {
+                if (location.equals("") || textView_date.getText().toString().equals("")) {
                     Toast.makeText(BookingScreen.this, "اكمل البيانات ", Toast.LENGTH_SHORT).show();
                 } else {
                     if (type == 1) {
@@ -137,7 +148,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
                             //progressBar.setVisibility(View.VISIBLE);
                             reservation.setName(retrivedname_user);
                             reservation.setPhoneNumber(retrivedphonenumber);
-                            reservation.setAge(age.getText().toString());
+                            reservation.setAge(location.toString());
                             reservation.setAddress(address.getText().toString());
                             reservation.setBuildingNo(number_bulding.getText().toString());
                             reservation.setDay(0);
@@ -180,7 +191,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
                        // progressBar.setVisibility(View.VISIBLE);
                         reservation.setName(retrivedname_user);
                         reservation.setPhoneNumber(retrivedphonenumber);
-                        reservation.setAge(age.getText().toString());
+                        reservation.setAge(location.toString());
                         reservation.setAddress(address.getText().toString());
                         reservation.setBuildingNo(number_bulding.getText().toString());
                         reservation.setDay(0);
@@ -279,7 +290,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         imageViewback = findViewById(R.id.backfrom_reservation_to_home);
         subment = findViewById(R.id.submet_id_booking);
         name = findViewById(R.id.nameclint_booking_id);
-        age = findViewById(R.id.agecllint_booking_id);
+        far3 = findViewById(R.id.agecllint_booking_id);
         phone = findViewById(R.id.phonnumbercllint_booking_id);
         reservation = new Reservation();
         textView_date = findViewById(R.id.historyclint_booking_id);
@@ -526,4 +537,13 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         return new SimpleDateFormat(myFormat, Locale.US);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        location=far3_item[position];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

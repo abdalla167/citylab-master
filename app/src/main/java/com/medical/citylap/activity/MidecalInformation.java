@@ -6,10 +6,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +34,9 @@ public class MidecalInformation extends AppCompatActivity {
     AdapterMidecalInformation adapterMidecalInformation;
     RecyclerView mRecyclerView;
     ProgressBar progressBar;
+    ImageView backfrommedicaltohom;
+    TextView textView;
+    ImageView imageView;
     MedicalInformationModel model=new MedicalInformationModel();
     ArrayList<MedicalInformationModel> modlist = new ArrayList<>();
     @Override
@@ -35,18 +44,39 @@ public class MidecalInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_midecal_information);
          progressBar=findViewById(R.id.prograbarmedical);
-        getdatamedical();
         mRecyclerView=findViewById(R.id.medcal_information_recycler);
+        backfrommedicaltohom=findViewById(R.id.backfrom_medical_to_home);
+        textView=findViewById(R.id.nointerntid_internet);
+        imageView=findViewById(R.id.imageView_no_medical_internt);
+         if(isConnected()) {
+             getdatamedical();
+         }
+         else
+         {
+             mRecyclerView.setVisibility(View.GONE);
+             textView.setVisibility(View.VISIBLE);
+             imageView.setVisibility(View.VISIBLE);
+             progressBar.setVisibility(View.GONE);
+         }
 
-
+        backfrommedicaltohom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MidecalInformation.this,Home.class));
+            }
+        });
 
 
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     public void getdatamedical() {
-
-
         final DatabaseReference nm = FirebaseDatabase.getInstance().getReference("medical");
         nm.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -72,6 +102,18 @@ public class MidecalInformation extends AppCompatActivity {
 
 
         });
+    }
+    public boolean isConnected() {
+        boolean connected = false;
+        try {
+            ConnectivityManager cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo nInfo = cm.getActiveNetworkInfo();
+            connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+            return connected;
+        } catch (Exception e) {
+            Log.e("Connectivity Exception", e.getMessage());
+        }
+        return connected;
     }
 
 

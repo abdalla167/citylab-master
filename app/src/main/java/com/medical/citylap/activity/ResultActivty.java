@@ -79,7 +79,6 @@ public class ResultActivty extends AppCompatActivity {
                         tvView.setVisibility(View.VISIBLE);
                         tvView.setText("لا يوجد نتائج حاليا");
                     }
-                    Log.d("TAG", "onResponse:result: "+SplashScreen.token_user);
                     for(int i=0;i<resultApi.getData().size();i++)
                     {
                         Resultcopy re=new Resultcopy();
@@ -112,7 +111,11 @@ public class ResultActivty extends AppCompatActivity {
                  mRecyclerView.setAdapter(adapterResult);
 
              }
-             else {                 Toast.makeText(this, "لايوجد بيانات", Toast.LENGTH_LONG).show();
+             else {
+                 Toast.makeText(this, "لايوجد بيانات", Toast.LENGTH_LONG).show();
+                             mRecyclerView.setVisibility(View.GONE);
+            tvView.setVisibility(View.VISIBLE);
+            imgview.setVisibility(View.VISIBLE);
              }
             progressBar.setVisibility(View.GONE);
         }
@@ -164,6 +167,7 @@ public class ResultActivty extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (!popFragment()) {
+            startActivity(new Intent(ResultActivty.this,Home.class));
             finish();
         }
     }

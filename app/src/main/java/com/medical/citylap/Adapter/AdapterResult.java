@@ -104,18 +104,18 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
     public void onBindViewHolder(@NonNull AdapterResult.ViewHolder2 holder, int position) {
 
         boolean isExpand = re.get(position).isExpand();
+        holder.layout.setVisibility(isExpand ? View.VISIBLE : View.GONE);
         if(network==1)
         {
             if(resultApi.getData().get(position).getNotes()!=null)
-            holder.typetest.setText(resultApi.getData().get(position).getNotes().toString()+"");
+                holder.typetest.setText(resultApi.getData().get(position).getNotes().toString()+"");
         }
-        holder.layout.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-        if (isExpand = re.get(position).isExpand() == false)
+        if (re.get(position).isExpand() == false)
         {
             holder.imageViewmax.setImageResource(R.drawable.ic_baseline_add_24);
         }
-        else {
-
+        if(re.get(position).isExpand() == true)
+        {
             if (network==1) {
                 holder.typetest.setText(resultApi.getData().get(position).getNotes() + "");
                 date = resultApi.getData().get(position).getUploadDate().substring(0, 10);
@@ -128,9 +128,7 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                     e.printStackTrace();
                 }
 
-                Log.d(TAG, "onBindViewHolder: " + date1);
                 String[] dayes = date1.toString().split(" ");
-                Log.d(TAG, "onBindViewHolder: " + dayes[0].toLowerCase());
 
                 if (dayes[0].toLowerCase().equals("sat")) {
                     holder.day.setText("اليوم : السبت");
@@ -163,14 +161,12 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                         @Override
                         public void onClick(View v) {
                             fragmentJump(resultApi.getData().get(position).getFiles().get(0), network);
-
                         }
                     });
                     holder.showPdf.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             fragmentJump(resultApi.getData().get(position).getFiles().get(0), network);
-
                         }
                     });
                     //if networking is work
@@ -197,8 +193,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                             }
                         }
                     });
-
-
                 }
                 // if is images
                 if (resultApi.getData().get(position).getMediaType() == 0) {
@@ -273,15 +267,9 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
             }
             holder.imageViewmax.setImageResource(R.drawable.ic_baseline_minimize_24);
-
-            }
-            // if is pdf
-
         }
-
-
-
-
+            // if is pdf
+        }
     public void SaveData() {
 
 
@@ -295,7 +283,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
 
     }
-
     private void loadData() {
         SharedPreferences sharedPref = mContext.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
         String retrivedphonenumber = sharedPref.getString("phonenumberuser", null);
@@ -307,7 +294,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
         cashModelSaveslist = gson.fromJson(json, type);
 
     }
-
     public int CheckIfExsit(CashModelSave cashModelSave) {
         if (cashModelSaveslist == null) {
             cashModelSaveslist = new ArrayList<>();
@@ -321,8 +307,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
         return 1;
     }
-
-
     @Override
     public int getItemCount() {
         if(network==1) {
@@ -364,7 +348,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
                     Resultcopy resultcopy = re.get(getAdapterPosition());
                     resultcopy.setExpand(!resultcopy.isExpand());
-                    notifyItemChanged(getAdapterPosition());
+                    notifyItemChanged(getLayoutPosition());
+                    Toast.makeText(mContext, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

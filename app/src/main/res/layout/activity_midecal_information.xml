@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cairo_semibold"
                 android:lineSpacingExtra="12sp"
-                android:text="حجز تحاليل"
+                android:text="معلومات طبيه"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -72,6 +72,36 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/imageView_no_medical_internt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/noiternt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.387"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/nointerntid_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cairo_semibold"
+            android:text="لايوجد اتصال بالانترنت"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/medcal_information_recycler"
+            app:layout_constraintVertical_bias="0.705" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

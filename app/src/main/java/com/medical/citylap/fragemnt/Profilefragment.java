@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.medical.citylap.R;
@@ -31,7 +32,7 @@ import static android.content.ContentValues.TAG;
 
 public class Profilefragment extends Fragment {
 TextView name,phonnumber;
-
+ProgressBar progressBar;
 Button logout;
 public String token;
 
@@ -68,6 +69,7 @@ public void intil(View view)
     name=view.findViewById(R.id.nameclintidprofle);
     phonnumber=view.findViewById(R.id.phonnumberclintprofile);
     logout=view.findViewById(R.id.lougout_button);
+    progressBar=view.findViewById(R.id.prograbarprofil);
 
 }
 public void getdata()
@@ -83,7 +85,7 @@ public void getdata()
         Log.d(TAG, "getdata: "+retrivedname_user);
     }
     else {
-
+progressBar.setVisibility(View.VISIBLE);
         RetrofitClint.getInstance().userlogin("01119082271" , SplashScreen.deviceToken).enqueue(new Callback<Loginmodle>() {
             @Override
             public void onResponse(Call<Loginmodle> call, Response<Loginmodle> response1) {
@@ -107,6 +109,7 @@ public void getdata()
                                 }
                                 preferences.edit().putString("phonenumberuserprofil",response2.body().getData().get(g).getPhoneNumber()).apply();
                                 preferences.edit().putString("nameuserprofile",response2.body().getData().get(g).getName()).apply();
+                         progressBar.setVisibility(View.GONE);
                             }
                         }
                         @Override

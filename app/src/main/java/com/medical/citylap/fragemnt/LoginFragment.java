@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment {
                  loButton.setBackgroundColor(Color.BLUE);
                  loButton.setClickable(false);
                  loginfunction(password.getText().toString());
-loButton.setClickable(true);
+                 loButton.setClickable(true);
              }
 
 
@@ -149,6 +149,7 @@ loButton.setClickable(true);
                     SplashScreen.token_user = response.body().getData().getToken();
                     final FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
+
                     progressBar.setVisibility(View.GONE);
                     ft.commit();
                 }

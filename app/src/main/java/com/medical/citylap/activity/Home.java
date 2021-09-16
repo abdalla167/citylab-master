@@ -46,12 +46,9 @@ public class Home extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
-
                     loadFragment(fragmenthome , "home");
                     return true;
                 case R.id.navigation_location:
-
                     startActivity(new Intent(Home.this, Mooglmap.class));
                     //fragment=new Fragment_map();
                     // loadFragment(fragment);
