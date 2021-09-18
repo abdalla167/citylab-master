@@ -80,7 +80,7 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_maps);
-        location = new String[]{"giza", "harm", "cario", "moneb"};
+        location = new String[]{"فرع الجيزه", "فرع المنيب", "فرع شارع الصحافه", "فرع شارع الحمهوريه"};
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
 
@@ -120,7 +120,7 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
 
                 // below lin is use to zoom our camera on map.
 
-                CameraPosition cameraPosition = CameraPosition.builder().target(locationArrayList.get(position)).zoom(15f).build();
+                CameraPosition cameraPosition = CameraPosition.builder().target(locationArrayList.get(position)).zoom(20f).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 //                // below line is use to move our camera to the specific location.
