@@ -105,14 +105,15 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
         boolean isExpand = re.get(position).isExpand();
         holder.layout.setVisibility(isExpand ? View.VISIBLE : View.GONE);
-        if(network==1)
-        {
-            if(resultApi.getData().get(position).getNotes()!=null)
-                holder.typetest.setText(resultApi.getData().get(position).getNotes().toString()+"");
-        }
+
         if (re.get(position).isExpand() == false)
         {
             holder.imageViewmax.setImageResource(R.drawable.ic_baseline_add_24);
+            if(network==1)
+            {
+                if(resultApi.getData().get(position).getNotes()!=null)
+                    holder.typetest.setText(resultApi.getData().get(position).getNotes().toString()+"");
+            }
         }
         if(re.get(position).isExpand() == true)
         {
@@ -152,11 +153,12 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                     holder.day.setText("اليوم : الجمعه");
                 }
 
-
+                   //file
                 if (resultApi.getData().get(position).getMediaType() == 1) {
-                    //file
-                    holder.recycler.setVisibility(View.GONE);
+
                     holder.noimag.setVisibility(View.VISIBLE);
+                    holder.recycler.setVisibility(View.GONE);
+
                     holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -196,7 +198,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                 }
                 // if is images
                 if (resultApi.getData().get(position).getMediaType() == 0) {
-
+                      holder.recycler.setVisibility(View.VISIBLE);
+                    holder.noimag.setVisibility(View.GONE);
                         holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         holder.adapter = new AdapteronlyImage(mContext, 1);
                         holder.adapter.setlist(resultApi.getData().get(position).getFiles());
@@ -238,6 +241,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                 holder.typetest.setText(cashModelSaveslist.get(position).getNametest() + "");
                 if (cashModelSaveslist.get(position).getType() == 1) {
                     //file
+
+
                     holder.recycler.setVisibility(View.GONE);
                     holder.noimag.setVisibility(View.VISIBLE);
                     holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -256,7 +261,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
 
                 }
                 if (cashModelSaveslist.get(position).getType() == 0) {
-
+                    holder.noimag.setVisibility(View.GONE);
+                    holder.recycler.setVisibility(View.VISIBLE);
                         holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         holder.adapter = new AdapteronlyImage(mContext, 0);
                         holder.adapter.setlist(cashModelSaveslist.get(position).getFile());
@@ -349,7 +355,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                     Resultcopy resultcopy = re.get(getAdapterPosition());
                     resultcopy.setExpand(!resultcopy.isExpand());
                     notifyItemChanged(getLayoutPosition());
-                    Toast.makeText(mContext, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
