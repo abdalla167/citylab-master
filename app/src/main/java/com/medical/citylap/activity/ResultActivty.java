@@ -79,17 +79,18 @@ public class ResultActivty extends AppCompatActivity {
                         tvView.setVisibility(View.VISIBLE);
                         tvView.setText("لا يوجد نتائج حاليا");
                     }
-                    for(int i=0;i<resultApi.getData().size();i++)
-                    {
-                        Resultcopy re=new Resultcopy();
-                        listofresultapi.add(re);
+                    if (resultApi.getData()!=null) {
+                        for (int i = 0; i < resultApi.getData().size(); i++) {
+                            Resultcopy re = new Resultcopy();
+                            listofresultapi.add(re);
+                        }
+                        Collections.reverse(resultApi.getData());
+                        adapterResult.setlist2(resultApi, listofresultapi);
+                        mRecyclerView.setAdapter(adapterResult);
                     }
-                    Collections.reverse(resultApi.getData());
-                    adapterResult.setlist2(resultApi,listofresultapi);
-                    mRecyclerView.setAdapter(adapterResult);
-                    progressBar.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
 
-                }
+                    }
                 }
             });
 

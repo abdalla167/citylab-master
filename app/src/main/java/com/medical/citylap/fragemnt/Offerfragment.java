@@ -45,8 +45,8 @@ public class Offerfragment extends Fragment {
  RecyclerView mRecyclerView;
  ImageView ivView;
  TextView tvView;
-ImageView imgview;
-ProgressBar progressBar;
+ ImageView imgview;
+ ProgressBar progressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +66,8 @@ ProgressBar progressBar;
             offersViewModel.getAllOffer().observe( getViewLifecycleOwner(),new Observer<AllOffer>() {
                 @Override
                 public void onChanged(AllOffer allOffers) {
+                    if(allOffers !=null)
+                    {
                     ArrayList<Datum> rev=new ArrayList<>();
                     rev= (ArrayList<Datum>) allOffers.getData();
                     Collections.reverse(rev);
@@ -73,9 +75,12 @@ ProgressBar progressBar;
                     mRecyclerView.setAdapter(offerAdapter);
                     progressBar.setVisibility(View.GONE);
                 }
+
+                }
             });
 
         } else {
+
             mRecyclerView.setVisibility(View.GONE);
             tvView.setVisibility(View.VISIBLE);
             imgview.setVisibility(View.VISIBLE);

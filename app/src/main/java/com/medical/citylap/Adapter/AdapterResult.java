@@ -1,4 +1,4 @@
-package com.medical.citylap.Adapter;
+ package com.medical.citylap.Adapter;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
