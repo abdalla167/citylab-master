@@ -189,7 +189,9 @@ android:weightSum="3.5">
             android:gravity="center"
             android:inputType="number"
             android:textDirection="rtl"
-            android:paddingRight="15dp" />
+            android:paddingRight="15dp"
+            android:drawSelectorOnTop="true"
+           />
 
 
     </LinearLayout>

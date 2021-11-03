@@ -7,6 +7,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -43,12 +47,19 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.medical.citylap.R;
 import com.medical.citylap.RetrofitClint;
 import com.medical.citylap.helperfunction.FileData;
+import com.medical.citylap.modles.LocationModle;
 import com.medical.citylap.modles.Loginmodle;
 import com.medical.citylap.modles.Reservation;
 import com.medical.citylap.modles.SimpleResponse;
+import com.medical.citylap.viewModel.DataLocation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -68,6 +79,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
+import static java.security.AccessController.getContext;
 
 public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener , AdapterView.OnItemSelectedListener{
     Button buttongetimage, subment;
@@ -75,13 +87,15 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
     Spinner far3;
     String location="";
     String sOffDate = "";
-    String[] far3_item = { "المنيب", "الجيزه", "الحومديه", "طريق 11", "المنوات"};
+  String []far3_item;
+    LocationModle locationModlel=new LocationModle();
     DatePickerDialog.OnDateSetListener Date_booking;
     TextView textView_date;
     EditText address, number_bulding, number_floer, number_part;
     ImageView imageView;
     ProgressBar progressBar;
     int type = 0;
+    DataLocation dataLocation;
     TextView textView;
     RadioGroup radioGroup;
     RadioButton radioButtonhome;
@@ -109,7 +123,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_screen);
         inti();
-
+        getdata();
         SharedPreferences preferences3 = BookingScreen.this.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
         String retrivedname_user = preferences3.getString("nameuserprofile", null);
         String retrivedphonenumber = preferences3.getString("phonenumberuser", null);
@@ -117,17 +131,14 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         phone.setText(retrivedphonenumber);
         initDateDialog();
         Date currentTime = Calendar.getInstance().getTime();
+
+
         far3.setOnItemSelectedListener(BookingScreen.this);
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,far3_item);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,getdata());
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         far3.setAdapter(aa);
-        imageViewback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BookingScreen.this, Home.class));
-            }
-        });
+
         subment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -301,8 +312,40 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         progressBar = findViewById(R.id.prograsbarbook);
         mContext=getApplicationContext();
 
+
+
     }
 
+    public ArrayList<String> getdata()
+    {
+
+        ArrayList<String>locationModles=new ArrayList<>();
+        String [] far3_item2=null;
+        final DatabaseReference nm = FirebaseDatabase.getInstance().getReference("location");
+        nm.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int i=0;
+                    for (DataSnapshot npsnapshot : dataSnapshot.getChildren()) {
+
+                        locationModlel = npsnapshot.getValue(LocationModle.class);
+                        locationModles.add(locationModlel.getNamelabe());
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+
+        });
+
+return locationModles;
+    }
     private void popUpMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(BookingScreen.this);
@@ -540,6 +583,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         location=far3_item[position];
+        Toast.makeText(mContext, ""+location, Toast.LENGTH_SHORT).show();
     }
 
     @Override

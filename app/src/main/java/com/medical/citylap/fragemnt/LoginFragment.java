@@ -144,13 +144,14 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<Loginmodle> call, Response<Loginmodle> response) {
                 if(response.isSuccessful()) {
                   //  Toast.makeText(getContext(), response.body().getData().getToken().toString(), Toast.LENGTH_SHORT).show();
+
                     SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
                     preferences.edit().putString("phonenumberuser", password).apply();
                     SplashScreen.token_user = response.body().getData().getToken();
                     final FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
-
                     progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show();
                     ft.commit();
                 }
             }

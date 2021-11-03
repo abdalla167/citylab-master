@@ -62,6 +62,7 @@ public class MidecalInformation extends AppCompatActivity {
         backfrommedicaltohom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 startActivity(new Intent(MidecalInformation.this,Home.class));
             }
         });
@@ -74,6 +75,7 @@ public class MidecalInformation extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+        startActivity(new Intent(this,Home.class));
     }
 
     public void getdatamedical() {

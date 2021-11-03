@@ -57,7 +57,7 @@ ProgressBar progressBar;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+finish();
     startActivity(new Intent(this,MidecalInformation.class));
     }
 }

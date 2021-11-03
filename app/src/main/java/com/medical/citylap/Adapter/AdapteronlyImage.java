@@ -34,8 +34,7 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 import static android.os.Environment.DIRECTORY_PICTURES;
 
-public class
-AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.ViewHolder2> {
+public class AdapteronlyImage extends RecyclerView.Adapter<AdapteronlyImage.ViewHolder2> {
 
 
     List<String> listoffer=new ArrayList<>();
@@ -73,7 +72,7 @@ if (stat==0)
     Uri imgUri=Uri.fromFile(file);
     holder.imageView.setImageURI(null);
     holder.imageView.setImageURI(imgUri);
-    holder.progressBar.setVisibility(View.GONE);
+   // holder.progressBar.setVisibility(View.GONE);
 }
 
 else {
