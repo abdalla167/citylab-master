@@ -1,5 +1,6 @@
 package com.medical.citylap.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -43,8 +44,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.medical.citylap.Adapter.ListViewAdapter;
 import com.medical.citylap.R;
+import com.medical.citylap.modles.LocationModle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,38 +75,36 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     // creating array list for adding all our locations.
     private ArrayList<LatLng> locationArrayList;
 
-    String[] location;
+    String[] location=new String[]{};
+    List<String>Locationlist=new ArrayList<>();
     ListView listView;
     ListAdapter listAdapter;
     CardView cardView;
     ImageView shoelist;
     ImageView backhome;
     SupportMapFragment mapFragment;
+    LocationModle locationModlel=new LocationModle();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_maps);
-        location = new String[]{"فرع الجيزه", "فرع المنيب", "فرع شارع الصحافه", "فرع شارع الحمهوريه"};
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.onCreate(savedInstanceState);
-
         locationArrayList = new ArrayList<>();
 
-        locationArrayList.add(sydney);
-        locationArrayList.add(TamWorth);
-        locationArrayList.add(NewCastle);
-        locationArrayList.add(Brisbane);
+        getdata();
 
         listView = findViewById(R.id.list_item_location);
         cardView = findViewById(R.id.cardView4);
         shoelist = findViewById(R.id.showe_list);
-        listAdapter = new ListViewAdapter(this, location);
-        listView.setAdapter(listAdapter);
+
         shoelist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +159,40 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
+    public void getdata()
+    {
+
+        ArrayList<String>locationModles=new ArrayList<>();
+
+        final DatabaseReference nm = FirebaseDatabase.getInstance().getReference("location");
+        nm.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int i=0;
+                    for (DataSnapshot npsnapshot : dataSnapshot.getChildren()) {
+
+                        locationModlel = npsnapshot.getValue(LocationModle.class);
+                      //  locationModles.add(locationModlel.getBigadd());
+                       // location[i]=(locationModlel.getNamelabe().toString());
+                        Locationlist.add(locationModlel.getNamelabe().toString());
+                        locationArrayList.add(new LatLng(Double.parseDouble( locationModlel.getLat().toString()),Double.parseDouble(locationModlel.getLog().toString())));
+                        i++;
+                    }
+                    listAdapter = new ListViewAdapter(Mooglmap.this, Locationlist);
+                    listView.setAdapter(listAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+
+        });
+
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -193,34 +232,34 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
         if (mMap != null) {
             geo = new Geocoder(Mooglmap.this, Locale.getDefault());
 
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
-                    try {
-                        if (geo == null)
-                            geo = new Geocoder(Mooglmap.this, Locale.getDefault());
-                        List<Address> address = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                        if (address.size() > 0) {
-                            mMap.addMarker(new MarkerOptions().position(latLng).title("Name:" + address.get(0).getCountryName()
-                                    + ". Address:" + address.get(0).getAddressLine(0)));
-
-//                            txtMarkers.setText("Name:" + address.get(0).getCountryName()
-//                                    + ". Address:" + address.get(0).getAddressLine(0));
-                        }
-                    } catch (IOException ex) {
-                        if (ex != null)
-                            Toast.makeText(Mooglmap.this, "Error:" + ex.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    Log.d("TAG", "onMarkerClick: "+marker.getTitle().toString() + " Lat:" + marker.getPosition().latitude + " Long:" + marker.getPosition().longitude);
-                    return false;
-                }
-            });
+//            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//                @Override
+//                public void onMapClick(LatLng latLng) {
+//                    try {
+//                        if (geo == null)
+//                            geo = new Geocoder(Mooglmap.this, Locale.getDefault());
+//                        List<Address> address = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
+//                        if (address.size() > 0) {
+//                            mMap.addMarker(new MarkerOptions().position(latLng).title("Name:" + address.get(0).getCountryName()
+//                                    + ". Address:" + address.get(0).getAddressLine(0)));
+//
+////                            txtMarkers.setText("Name:" + address.get(0).getCountryName()
+////                                    + ". Address:" + address.get(0).getAddressLine(0));
+//                        }
+//                    } catch (IOException ex) {
+//                        if (ex != null)
+//                            Toast.makeText(Mooglmap.this, "Error:" + ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            });
+//
+//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    Log.d("TAG", "onMarkerClick: "+marker.getTitle().toString() + " Lat:" + marker.getPosition().latitude + " Long:" + marker.getPosition().longitude);
+//                    return false;
+//                }
+//            });
         }
 
     }

@@ -79,8 +79,6 @@ android:weightSum="3.5">
             android:text="رقم الموبايل"
             android:textColor="#2e3094"
             android:textSize="15sp" />
-
-
         <EditText
             android:id="@+id/phonnumbercllint_booking_id"
             android:layout_width="match_parent"

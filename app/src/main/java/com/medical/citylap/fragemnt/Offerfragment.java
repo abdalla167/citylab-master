@@ -35,7 +35,6 @@ import com.medical.citylap.viewModel.OffersViewModel;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 
 public class Offerfragment extends Fragment {
@@ -74,6 +73,13 @@ public class Offerfragment extends Fragment {
                     offerAdapter.setlist( rev);
                     mRecyclerView.setAdapter(offerAdapter);
                     progressBar.setVisibility(View.GONE);
+                    if(allOffers.getData().size()==0||allOffers.getData() ==null)
+                    {
+
+                        mRecyclerView.setVisibility(View.GONE);
+                        tvView.setVisibility(View.VISIBLE);
+                        tvView.setText("لا يوجد عروض حاليا");
+                    }
                 }
 
                 }

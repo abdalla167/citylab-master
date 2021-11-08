@@ -7,10 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 
 import android.Manifest;
 import android.app.Activity;
@@ -56,7 +53,6 @@ import com.medical.citylap.R;
 import com.medical.citylap.RetrofitClint;
 import com.medical.citylap.helperfunction.FileData;
 import com.medical.citylap.modles.LocationModle;
-import com.medical.citylap.modles.Loginmodle;
 import com.medical.citylap.modles.Reservation;
 import com.medical.citylap.modles.SimpleResponse;
 import com.medical.citylap.viewModel.DataLocation;
@@ -87,7 +83,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
     Spinner far3;
     String location="";
     String sOffDate = "";
-  String []far3_item;
+  List< String> far3_item=new ArrayList<>();
     LocationModle locationModlel=new LocationModle();
     DatePickerDialog.OnDateSetListener Date_booking;
     TextView textView_date;
@@ -133,11 +129,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
         Date currentTime = Calendar.getInstance().getTime();
 
 
-        far3.setOnItemSelectedListener(BookingScreen.this);
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,getdata());
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        far3.setAdapter(aa);
+
 
         subment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,11 +308,11 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
 
     }
 
-    public ArrayList<String> getdata()
+    public void getdata()
     {
 
         ArrayList<String>locationModles=new ArrayList<>();
-        String [] far3_item2=null;
+
         final DatabaseReference nm = FirebaseDatabase.getInstance().getReference("location");
         nm.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -331,9 +323,15 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
 
                         locationModlel = npsnapshot.getValue(LocationModle.class);
                         locationModles.add(locationModlel.getNamelabe());
-
+                        far3_item.add(locationModlel.getNamelabe().toString());
+                        i++;
                     }
+                    far3.setOnItemSelectedListener(BookingScreen.this);
 
+                    ArrayAdapter aa = new ArrayAdapter(BookingScreen.this,android.R.layout.simple_spinner_item,locationModles);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //Setting the ArrayAdapter data on the Spinner
+                    far3.setAdapter(aa);
                 }
             }
 
@@ -344,7 +342,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
 
         });
 
-return locationModles;
+
     }
     private void popUpMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
@@ -374,6 +372,7 @@ return locationModles;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -582,8 +581,9 @@ return locationModles;
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        location=far3_item[position];
-        Toast.makeText(mContext, ""+location, Toast.LENGTH_SHORT).show();
+        location=far3_item.get(position);
+        //Toast.makeText(mContext, ""+location, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

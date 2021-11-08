@@ -170,6 +170,7 @@ public static Fragment fragment=new Offerfragment();
 
 
         });
+
         suger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -104,7 +105,9 @@ public class Home extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(tag)
                     .commit();
+
             return true;
         }
         return false;
@@ -118,10 +121,18 @@ public class Home extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
+
+
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
-            System.exit(0);
+            finishAffinity();
             finish();
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+
             return;
         } else {
             Toast.makeText(getBaseContext(), "Please click back again to exit", Toast.LENGTH_SHORT).show();

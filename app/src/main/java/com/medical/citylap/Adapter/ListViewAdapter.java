@@ -9,15 +9,19 @@ import android.widget.TextView;
 
 import com.medical.citylap.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListViewAdapter  extends BaseAdapter {
     Context context;
-    String []item;
+
+    List<String>item=new ArrayList<>();
     LayoutInflater layoutInflater;
 
     @Override
     public int getCount() {
 
-        return item.length;
+        return item.size();
     }
 
     @Override
@@ -36,12 +40,12 @@ public class ListViewAdapter  extends BaseAdapter {
         layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View iteme=layoutInflater.inflate(R.layout.item_loctaion,parent,false);
         textView=iteme.findViewById(R.id.text_location);
-        textView.setText(item[position]);
+        textView.setText(item.get(position));
 
         return iteme;
     }
 
-    public ListViewAdapter(Context context, String[] item) {
+    public ListViewAdapter(Context context, List<String> item) {
         this.context = context;
         this.item = item;
     }

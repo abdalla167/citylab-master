@@ -107,6 +107,11 @@ imageView_.setOnClickListener(new View.OnClickListener() {
             requestPermission();
         }
         if (stat==1) {
+
+
+
+
+
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -121,6 +126,7 @@ imageView_.setOnClickListener(new View.OnClickListener() {
                     pDialog.dismiss();
                 }
             });
+
             webView.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + "http://" + link);
             pDialog.dismiss();
             imageView_.setOnClickListener(new View.OnClickListener() {
