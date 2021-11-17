@@ -44,8 +44,9 @@ public class SplashScreen extends AppCompatActivity {
     private static int SPLASH_SCREEN_TIME_OUT = 3000;
 
 
-    public static String deviceToken ;
+    public static String deviceToken;
     public static String token_user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class SplashScreen extends AppCompatActivity {
                         }
 
                         // Get new FCM registration token
-                         deviceToken = task.getResult();
+                        deviceToken = task.getResult();
                         // Log and toast
                     }
                 });
@@ -77,7 +78,7 @@ public class SplashScreen extends AppCompatActivity {
         animation2.setRepeatCount(Animation.INFINITE);
         animation2.setDuration(2000);
 
-        final TextView textView=findViewById(R.id.textView3_spalsh);
+        final TextView textView = findViewById(R.id.textView3_spalsh);
         final ImageView splash = findViewById(R.id.imagelogogsplash);
         splash.startAnimation(animation);
         textView.startAnimation(animation2);
@@ -85,20 +86,24 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 SharedPreferences preferences = SplashScreen.this.getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
-                final String retrivedToken  = preferences.getString("phonenumberuser",null);
+                final String retrivedToken = preferences.getString("phonenumberuser", null);
                 //second parameter default value.
-                if(retrivedToken !=null) {
-                    RetrofitClint.getInstance().userlogin(retrivedToken,deviceToken).enqueue(new Callback<Loginmodle>() {
+                if (retrivedToken != null) {
+                    RetrofitClint.getInstance().userlogin(retrivedToken, deviceToken).enqueue(new Callback<Loginmodle>() {
                         @Override
                         public void onResponse(Call<Loginmodle> call, Response<Loginmodle> response) {
                             if (response.isSuccessful())
                             //save token in application
                             {
-                                Log.d("TAG", "onResponse: " + response.body().getData().getToken());
-                                token_user = response.body().getData().getToken();
-
+                                //Log.d("TAG", "onResponse: " + response.body().getData().getToken());
+                                if (response.body().getData() != null) {
+                                    if (response.body().getData().getToken() != null) {
+                                        token_user = response.body().getData().getToken();
+                                    }
+                                }
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Loginmodle> call, Throwable t) {
 

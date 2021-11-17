@@ -78,7 +78,20 @@ if (stat==0)
 else {
 
 
-    Glide.with(mContext).load("http://" + listoffer.get(position)).into(holder.imageView);
+    Glide.with(mContext).load("http://" + listoffer.get(position)).listener(new RequestListener<Drawable>() {
+        @Override
+        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+            holder.progressBar.setVisibility(View.GONE);
+            return false;
+        }
+
+        @Override
+        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+            holder.progressBar.setVisibility(View.GONE);
+
+            return false;
+        }
+    }).into(holder.imageView);
 
 
 }
@@ -103,7 +116,7 @@ else {
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
          imageView=itemView.findViewById(R.id.image_inside_result_id);
-
+progressBar=itemView.findViewById(R.id.progressimageresult);
          itemView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {

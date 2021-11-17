@@ -74,15 +74,10 @@ PDFView pdfView;
     }
 
 
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        View view= inflater.inflate(R.layout.fragment_p_d_f_, container, false);
-        hasPermissions(getContext(),PERMISSIONS);
 
         pDialog = new ProgressDialog(getContext());
         pDialog.setTitle("PDF");
@@ -91,17 +86,27 @@ PDFView pdfView;
         pDialog.setCancelable(false);
         pDialog.show();
 
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view= inflater.inflate(R.layout.fragment_p_d_f_, container, false);
+        hasPermissions(getContext(),PERMISSIONS);
         WebView webView = view.findViewById(R.id.webview);
         ImageView imageView_=view.findViewById(R.id.exist);
-         pdfView=view.findViewById(R.id.pdfview);
+        pdfView=view.findViewById(R.id.pdfview);
         // Include dialog.xml file
+        pDialog = new ProgressDialog(getContext());
         request(view);
-imageView_.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        startActivity(new Intent(getActivity(), ResultActivty.class));
-    }
-});
+        imageView_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ResultActivty.class));
+            }
+        });
         if (checkPermission()) {
         } else {
             requestPermission();
@@ -117,7 +122,7 @@ imageView_.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
-                    pDialog.show();
+pDialog.show();
                 }
 
                 @Override
@@ -128,6 +133,7 @@ imageView_.setOnClickListener(new View.OnClickListener() {
             });
 
             webView.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + "http://" + link);
+            Log.d("TAG", "onCreateView: "+link);
             pDialog.dismiss();
             imageView_.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,9 +160,10 @@ imageView_.setOnClickListener(new View.OnClickListener() {
                     .enableDoubletap(true)
                     .load();
 
-pDialog.dismiss();
+            pDialog.dismiss();
         }
         return  view;
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

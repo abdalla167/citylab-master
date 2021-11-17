@@ -3,6 +3,8 @@ package com.medical.citylap.fragemnt;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -137,6 +139,9 @@ public class LoginFragment extends Fragment {
     }
     public void loginfunction(final String password)
     {
+        if(Conectedinternt()==true )
+        {
+
 
         progressBar.setVisibility(View.VISIBLE);
         RetrofitClint.getInstance().userlogin(password,SplashScreen.deviceToken).enqueue(new Callback<Loginmodle>() {
@@ -144,23 +149,53 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<Loginmodle> call, Response<Loginmodle> response) {
                 if(response.isSuccessful()) {
                   //  Toast.makeText(getContext(), response.body().getData().getToken().toString(), Toast.LENGTH_SHORT).show();
-
                     SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
                     preferences.edit().putString("phonenumberuser", password).apply();
-                    SplashScreen.token_user = response.body().getData().getToken();
-                    final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show();
-                    ft.commit();
+                    if(response.body().getData()!=null) {
+                        if (response.body().getData().getToken() != null) {
+                            SplashScreen.token_user = response.body().getData().getToken();
+                            final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show();
+                            ft.commit();
+                        }
+                        else
+                        {
+
+                            Toast.makeText(getContext(), "حدث خطاء برجاء المحاوله في وقت لاحق او التاكد من وجود اتصال بالانترنت", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                    }
+loButton.setBackgroundResource(R.drawable.shapbutton);
                 }
             }
 
             @Override
             public void onFailure(Call<Loginmodle> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                loButton.setBackgroundResource(R.drawable.shapbutton);
+
             }
         });
-
+        }
+        else
+        {
+            Toast.makeText(getContext(), "لايوجد اتصال بالانترنت", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public boolean Conectedinternt()
+    {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return   true;
+        }
+        else
+            return false;
     }
 }

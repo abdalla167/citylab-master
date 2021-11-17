@@ -80,7 +80,7 @@ public void getdata()
     String retrivedname_user  = preferences3.getString("nameuserprofile",null);
     String retrivedphonenumber = preferences3.getString("phonenumberuser", null);
 
-    if(retrivedname_user !=null)
+    if(retrivedname_user !=null && retrivedphonenumber !=null )
     {
         name.setText(retrivedname_user);
         phonnumber.setText(retrivedphonenumber);
@@ -96,11 +96,12 @@ progressBar.setVisibility(View.VISIBLE);
                     RetrofitClint.getInstance().getalluer("Bearer " + response1.body().getData().getToken()).enqueue(new Callback<UsersResponse>() {
                         @Override
                         public void onResponse(Call<UsersResponse> call, Response<UsersResponse> response2) {
-                            if (response2.isSuccessful()) {
-
+                            if (response2.isSuccessful()){
                                 SharedPreferences preferences = getContext().getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
                                 String retrivedphonenumber = preferences.getString("phonenumberuser", null);//second parameter default value.
                               int g=0;
+                              if(response2.body().getData()!=null){
+                                  if(response2.body().getData().size()>0)
                                 for (int i = 0; i < response2.body().getData().size(); i++) {
                                     if (retrivedphonenumber.equals(response2.body().getData().get(i).getPhoneNumber())) {
                                         name.setText(response2.body().getData().get(i).getName());
@@ -109,8 +110,9 @@ progressBar.setVisibility(View.VISIBLE);
                                         break;
                                     }
                                 }
+                              }
                                 preferences.edit().putString("phonenumberuserprofil",response2.body().getData().get(g).getPhoneNumber()).apply();
-                                preferences.edit().putString("nameuserprofile",response2.body().getData().get(g).getName()).apply();
+                                preferences.edit().putString("nameuserprofile",response2.body().getData().get(g).getName()+" ").apply();
                          progressBar.setVisibility(View.GONE);
                             }
                         }
@@ -122,6 +124,7 @@ progressBar.setVisibility(View.VISIBLE);
             }
             @Override
             public void onFailure(Call<Loginmodle> call, Throwable t) {
+
 
             }
         });

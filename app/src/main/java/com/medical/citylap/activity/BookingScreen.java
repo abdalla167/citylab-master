@@ -258,7 +258,13 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
             exception.printStackTrace();
         }
         String s = dfto.format(today);
-
+imageViewback.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        finish();
+        startActivity(new Intent(BookingScreen.this,Home.class));
+    }
+});
         textView_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -267,6 +273,8 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
+                Locale locale = getResources().getConfiguration().locale.ENGLISH;
+                Locale.setDefault(locale);
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         BookingScreen.this,

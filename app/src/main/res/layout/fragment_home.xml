@@ -188,6 +188,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline2"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline3"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintGuide_percent="0.58" />
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -218,83 +232,87 @@
 
                         <Button
                             android:id="@+id/suger_id_home"
-                            android:layout_width="150dp"
-                            android:layout_height="45dp"
-                            android:layout_marginRight="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/borderwhite"
                             android:drawableRight="@drawable/sugeronet"
                             android:gravity="center"
                             android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+
                             android:text="قياس مستوى السكر"
                             android:textColor="#2e3094"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/guideline3"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintHorizontal_bias="0.636"
+                            app:layout_constraintStart_toStartOf="@+id/guideline2"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.382" />
+                            app:layout_constraintVertical_bias="0.745" />
 
                         <Button
                             android:id="@+id/presserblode_id_home"
-                            android:layout_width="150dp"
-                            android:layout_height="45dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/borderwhite"
                             android:drawableRight="@drawable/bloodpre"
                             android:gravity="center"
                             android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
                             android:text="قياس ضغط الدم"
                             android:textColor="#2e3094"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.061"
+                            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                            app:layout_constraintHorizontal_bias="0.173"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.376" />
+                            app:layout_constraintVertical_bias="0.756" />
+
 
                         <Button
                             android:id="@+id/perfect_wight_id_home"
-                            android:layout_width="150dp"
-                            android:layout_height="45dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="15sp"
                             android:background="@drawable/borderwhite"
                             android:drawableRight="@drawable/wight"
                             android:gravity="center"
                             android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+
                             android:text="الوزن المثالى"
                             android:textColor="#2e3094"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.939" />
-
+                            app:layout_constraintHorizontal_bias="0.853"
+                            app:layout_constraintStart_toStartOf="@+id/guideline2"
+                            app:layout_constraintTop_toTopOf="@+id/guideline3"
+                            app:layout_constraintVertical_bias="0.567" />
 
                         <Button
                             android:id="@+id/medical_information"
-                            android:layout_width="150dp"
-                            android:layout_height="45dp"
-                            android:layout_marginRight="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/borderwhite"
                             android:drawableRight="@drawable/medi"
                             android:gravity="center"
+                            android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:text="معلومات طبيه"
                             android:textColor="#2e3094"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.061"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                            app:layout_constraintHorizontal_bias="0.28"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.936" />
+                            app:layout_constraintTop_toTopOf="@+id/guideline3"
+                            app:layout_constraintVertical_bias="0.565" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

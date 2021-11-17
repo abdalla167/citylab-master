@@ -59,7 +59,7 @@ public class Blood_activity extends AppCompatActivity {
                 Utile.hideKeyboard(Blood_activity.this);
 
                 cardView.setVisibility(View.VISIBLE);
-                information.setText("enta tmam awee we lazem take care your self");
+                information.setText("التحديث القادم");
             }
             }
         });

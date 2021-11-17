@@ -200,6 +200,12 @@ public static Fragment fragment=new Offerfragment();
             public void onClick(View v) {
      startActivity(new Intent(getContext(), MidecalInformation.class));            }
         });
+        medicalinformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(myContext, "التحديث القادم", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -290,7 +296,6 @@ public static Fragment fragment=new Offerfragment();
                 @Override
                 public void onResponse(Call<AllOffer> call, Response<AllOffer> response) {
                     if (response.isSuccessful()) {
-
 
                         b.putBoolean("isLoaded" , true);
 

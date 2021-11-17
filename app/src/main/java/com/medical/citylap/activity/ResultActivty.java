@@ -73,13 +73,8 @@ public class ResultActivty extends AppCompatActivity {
                 public void onChanged(ResultApi resultApi) {
                     if (resultApi !=null)
                     {
-                    if(resultApi.getData()==null)
+                    if(resultApi.getData()!=null)
                     {
-                        mRecyclerView.setVisibility(View.GONE);
-                        tvView.setVisibility(View.VISIBLE);
-                        tvView.setText("لا يوجد نتائج حاليا");
-                    }
-                    if (resultApi.getData()!=null) {
                         for (int i = 0; i < resultApi.getData().size(); i++) {
                             Resultcopy re = new Resultcopy();
                             listofresultapi.add(re);
@@ -87,6 +82,12 @@ public class ResultActivty extends AppCompatActivity {
                         Collections.reverse(resultApi.getData());
                         adapterResult.setlist2(resultApi, listofresultapi);
                         mRecyclerView.setAdapter(adapterResult);
+
+                    }
+                   else {
+                        mRecyclerView.setVisibility(View.GONE);
+                        tvView.setVisibility(View.VISIBLE);
+                        tvView.setText("لا يوجد نتائج حاليا");
                     }
                         progressBar.setVisibility(View.GONE);
 

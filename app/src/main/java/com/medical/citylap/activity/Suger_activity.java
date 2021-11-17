@@ -63,7 +63,7 @@ finish();
                     Utile.hideKeyboard(Suger_activity.this);
 
                     cardView.setVisibility(View.VISIBLE);
-                    information.setText("enta tmam awee we lazem take care your self");
+                    information.setText("التحديث القادم");
                 }
             }
 

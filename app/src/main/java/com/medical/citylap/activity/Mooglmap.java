@@ -67,10 +67,7 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     // of 4 different locations.
     Geocoder geo;
 
-    LatLng sydney = new LatLng(29.613473238612904, 30.654309019446373);
-    LatLng TamWorth = new LatLng(29.891483056260487 , 31.261986941099167);
-    LatLng NewCastle = new LatLng(29.898009941244563, 31.26653596758842);
-    LatLng Brisbane = new LatLng(-2.470125, 15.021072);
+
     private GoogleMap mMap;
     // creating array list for adding all our locations.
     private ArrayList<LatLng> locationArrayList;
@@ -125,7 +122,7 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
 
                 // below lin is use to zoom our camera on map.
 
-                CameraPosition cameraPosition = CameraPosition.builder().target(locationArrayList.get(position)).zoom(20f).build();
+                CameraPosition cameraPosition = CameraPosition.builder().target(locationArrayList.get(position)).zoom(100f).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 //                // below line is use to move our camera to the specific location.

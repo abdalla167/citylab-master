@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.medical.citylap.R;
 import com.medical.citylap.RetrofitClint;
 
@@ -36,6 +37,7 @@ public class signupuser extends Fragment {
     EditText password,name;
     Button loButton;
     TextView textView;
+    BottomNavigationView navigation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,23 +63,23 @@ public class signupuser extends Fragment {
             public void onClick(View v) {
 
                 loButton.setClickable(false);
-               RetrofitClint.getInstance().usersignup(name.getText().toString(),password.getText().toString() , SplashScreen.deviceToken).enqueue(new Callback<SimpleResponse>() {
+
+                RetrofitClint.getInstance().usersignup(name.getText().toString()+" ",password.getText().toString() , SplashScreen.deviceToken).enqueue(new Callback<SimpleResponse>() {
                    @Override
                    public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
                        if(response.isSuccessful())
                        {
-                           Toast.makeText(getContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                if(response.isSuccessful()) {
+                           if(response.body().getData()!=null) {
+                               Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                               String phonnumber = password.getText().toString();
+                               SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
+                               preferences.edit().putString("phonenumberuser", phonnumber).apply();
+                               final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                               ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
+                               ft.commit();
+                           }
+                   }
 
-                String phonnumber = password.getText().toString();
-                SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
-                preferences.edit().putString("phonenumberuser", phonnumber).apply();
-
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
-                ft.commit();
-                }
-                       }
                    }
 
                    @Override
@@ -106,5 +108,6 @@ return view;
         name=view.findViewById(R.id.editText_name_sign_in_id);
         loButton = view.findViewById(R.id.button_login_id);
         textView=view.findViewById(R.id.Loginfromsignup);
+        navigation =view.findViewById(R.id.bottomNavigationView);
     }
 }

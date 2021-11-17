@@ -58,7 +58,7 @@ public class Wight_acticty extends AppCompatActivity {
                     Utile.hideKeyboard(Wight_acticty.this);
 
                     cardView.setVisibility(View.VISIBLE);
-                    information.setText("enta tmam awee we lazem take care your self");
+                    information.setText("التحديث القادم");
                 }
             }
         });
