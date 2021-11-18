@@ -5,12 +5,11 @@
     android:layout_height="match_parent">
 
     <!-- image viwer to view the images -->
-    <ImageView
+    <com.ortiz.touchview.TouchImageView
         android:id="@+id/imageViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-
         />
 
 </LinearLayout>

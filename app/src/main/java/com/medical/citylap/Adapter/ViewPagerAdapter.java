@@ -14,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.medical.citylap.R;
+import com.ortiz.touchview.TouchImageView;
 
 import java.io.File;
 import java.util.List;
@@ -59,7 +60,7 @@ int stat;
         View itemView = mLayoutInflater.inflate(R.layout.item_view_pager, container, false);
 
         // referencing the image view from the item.xml file
-        ImageView imageView =  itemView.findViewById(R.id.imageViewMain);
+        TouchImageView imageView =  itemView.findViewById(R.id.imageViewMain);
 
 
         if(stat==1) {
@@ -67,6 +68,12 @@ int stat;
             Glide.with(context).load("http://" + images.get(position)).into(imageView);
             // Adding the View
             Objects.requireNonNull(container).addView(itemView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageView.setRotation(imageView.getRotation() + 90);
+                }
+            });
 
         }
         if(stat==0)
@@ -76,6 +83,12 @@ int stat;
         imageView.setImageURI(null);
           imageView.setImageURI(imgUri);
             Objects.requireNonNull(container).addView(itemView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageView.setRotation(imageView.getRotation() + 90);
+                }
+            });
 
         }
 

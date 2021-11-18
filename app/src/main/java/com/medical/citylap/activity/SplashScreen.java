@@ -103,14 +103,11 @@ public class SplashScreen extends AppCompatActivity {
                                 }
                             }
                         }
-
                         @Override
                         public void onFailure(Call<Loginmodle> call, Throwable t) {
-
                         }
                     });
                 }
-
                 startActivity(new Intent(SplashScreen.this, Home.class));
                 finish();
                 //the current activity will get finished.

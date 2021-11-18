@@ -78,15 +78,15 @@ PDFView pdfView;
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if(stat==1) {
+            pDialog = new ProgressDialog(getContext());
+            pDialog.setTitle("PDF");
+            pDialog.setMessage("Loading...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
 
-        pDialog = new ProgressDialog(getContext());
-        pDialog.setTitle("PDF");
-        pDialog.setMessage("Loading...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
-
-
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -148,7 +148,6 @@ pDialog.show();
         else
         {
 
-            pDialog.show();
             webView.setVisibility(View.GONE);
             pdfView.setVisibility(View.VISIBLE);
             File file= new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)+"/"+link);
@@ -160,8 +159,9 @@ pDialog.show();
                     .enableDoubletap(true)
                     .load();
 
-            pDialog.dismiss();
+
         }
+        pDialog.dismiss();
         return  view;
 
     }

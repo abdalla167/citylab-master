@@ -100,7 +100,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
     LinearLayout linearLayout;
     Reservation reservation;
     String token = null;
-    List<FileData> files = new ArrayList<FileData>();
+    List<FileData> files = new ArrayList<>();
     FileData fileData;
     ByteArrayOutputStream bytes;
     InputStream inputStream;
