@@ -74,6 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/item_list_result_befor"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar

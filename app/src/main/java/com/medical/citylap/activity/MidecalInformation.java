@@ -95,11 +95,16 @@ public class MidecalInformation extends AppCompatActivity {
                     adapterMidecalInformation=new AdapterMidecalInformation(MidecalInformation.this,modlist);
                     mRecyclerView.setAdapter(adapterMidecalInformation);
                 }
+                else
+                {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MidecalInformation.this, ""+error, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
 
 

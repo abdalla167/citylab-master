@@ -32,7 +32,6 @@ public class ResultuserViewmodle extends ViewModel {
 
         Single<ResultApi> single= RetrofitClint.getInstance().getResults("Bearer "+token).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
         single.subscribe(o->resultmutbel.setValue(o),throwable -> Log.e(TAG, "Throwable " + throwable.getMessage()));
 return resultmutbel;
     }

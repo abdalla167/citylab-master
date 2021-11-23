@@ -87,7 +87,8 @@ public class ResultActivty extends AppCompatActivity {
                    else {
                         mRecyclerView.setVisibility(View.GONE);
                         tvView.setVisibility(View.VISIBLE);
-                        tvView.setText("لا يوجد نتائج حاليا");
+                        tvView.setText("لا يوجد نتائج حاليا" +"\n"+
+                                "برجاء تسجيل الخروج والدخول مره اخري");
                     }
                         progressBar.setVisibility(View.GONE);
 

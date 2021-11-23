@@ -128,20 +128,15 @@ progressBar=itemView.findViewById(R.id.progressimageresult);
 
                  dialog.show();
 
-//                 ImageView imaged=dialog.findViewById(R.id.image_in_dalog);
-//                 Glide.with(mContext).load("http://"+listoffer.get(getAdapterPosition()))
-//                         .into(imaged);
+
 
                  viewPager =dialog.findViewById(R.id.viewPagerMain);
 
-                 // Initializing the ViewPager Object
-
-
-                 // Initializing the ViewPagerAdapter
                  mViewPagerAdapter = new ViewPagerAdapter(mContext, listoffer,stat);
 
-                 // Adding the Adapter to the ViewPager
+
                  viewPager.setAdapter(mViewPagerAdapter);
+
 
              }
          });

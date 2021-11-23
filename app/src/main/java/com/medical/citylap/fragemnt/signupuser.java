@@ -69,7 +69,7 @@ public class signupuser extends Fragment {
                    public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
                        if(response.isSuccessful())
                        {
-                           if(response.body().getData()!=null) {
+                           {
                                Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                String phonnumber = password.getText().toString();
                                SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE);
@@ -77,8 +77,13 @@ public class signupuser extends Fragment {
                                final FragmentTransaction ft = getFragmentManager().beginTransaction();
                                ft.replace(R.id.fragment_container, new Profilefragment(), "NewFragmentTag");
                                ft.commit();
+
                            }
                    }
+                       else
+                       {
+                           Toast.makeText(getContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                       }
 
                    }
 

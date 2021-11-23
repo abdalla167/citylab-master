@@ -104,8 +104,8 @@ public class Home extends AppCompatActivity {
         if (fragment != null && !fragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(tag)
+                    .replace(R.id.fragment_container, fragment,tag)
+                    .addToBackStack(null)
                     .commit();
 
             return true;

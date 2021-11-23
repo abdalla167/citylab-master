@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -66,6 +67,8 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     // below are the latitude and longitude
     // of 4 different locations.
     Geocoder geo;
+    ProgressBar progressBar;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
 
     private GoogleMap mMap;
@@ -87,15 +90,49 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_maps);
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+// Permission is not granted
+// Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+// Permission has already been granted
+
+
+
+        }
+
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.onCreate(savedInstanceState);
         locationArrayList = new ArrayList<>();
-
+progressBar=findViewById(R.id.locatioprograss);
         getdata();
 
         listView = findViewById(R.id.list_item_location);
@@ -122,7 +159,7 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
 
                 // below lin is use to zoom our camera on map.
 
-                CameraPosition cameraPosition = CameraPosition.builder().target(locationArrayList.get(position)).zoom(100f).build();
+                CameraPosition cameraPosition = CameraPosition.builder().target(locationArrayList.get(position)).zoom(15f).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 //                // below line is use to move our camera to the specific location.
@@ -178,6 +215,7 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
                     }
                     listAdapter = new ListViewAdapter(Mooglmap.this, Locationlist);
                     listView.setAdapter(listAdapter);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
@@ -221,8 +259,6 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
     }
 
 
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -260,5 +296,31 @@ public class Mooglmap extends AppCompatActivity implements OnMapReadyCallback {
         }
 
     }
+    //When the connect request has successfully completed
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
 
 }

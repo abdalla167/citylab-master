@@ -32,7 +32,9 @@ import com.medical.citylap.RetrofitClint;
 import com.medical.citylap.activity.AboutUS;
 import com.medical.citylap.activity.Blood_activity;
 import com.medical.citylap.activity.BookingScreen;
+import com.medical.citylap.activity.Informationbefortest;
 import com.medical.citylap.activity.MidecalInformation;
+import com.medical.citylap.activity.OfferActivity;
 import com.medical.citylap.activity.ResultActivty;
 import com.medical.citylap.activity.SplashScreen;
 import com.medical.citylap.activity.Suger_activity;
@@ -76,11 +78,22 @@ public static Fragment fragment=new Offerfragment();
     private Context myContext ;
 
     Bundle b = new Bundle();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setnewoffers();
+
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         
-        myContext = context ; 
+        myContext = context ;
+
+
+
     }
 
     @Override
@@ -97,12 +110,6 @@ public static Fragment fragment=new Offerfragment();
         intilazation( view);
 
         savedInstanceState = b ;
-
-        boolean isLoaded = savedInstanceState.getBoolean("isLoaded");
-
-        if (!isLoaded){
-
-        }
 
 
         adapter = new SliderAdapterExample(myContext);
@@ -121,10 +128,9 @@ public static Fragment fragment=new Offerfragment();
             @Override
             public void onClick(View v) {
 
+             startActivity(new Intent(getContext(), OfferActivity.class));
+            getActivity().finish();
 
-              final FragmentTransaction ft = getFragmentManager().beginTransaction();
-              ft.replace(R.id.fragment_container, new Offerfragment(), "NewFragmentTag");
-              ft.commit();
             }
         });
         result.setOnClickListener(new View.OnClickListener() {
@@ -203,14 +209,10 @@ public static Fragment fragment=new Offerfragment();
         medicalinformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(myContext, "التحديث القادم", Toast.LENGTH_SHORT).show();
-            }
+                startActivity(new Intent( myContext, Informationbefortest.class));            }
         });
 
-
-
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.side_slide);
-
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
         animation.setDuration(1500);
@@ -239,13 +241,10 @@ public static Fragment fragment=new Offerfragment();
         animation.setDuration(1500);
         perfectwight.startAnimation(animation);
 
-
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
         animation.setDuration(1500);
         prusioer.startAnimation(animation);
-
-
 
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
@@ -297,9 +296,10 @@ public static Fragment fragment=new Offerfragment();
                 public void onResponse(Call<AllOffer> call, Response<AllOffer> response) {
                     if (response.isSuccessful()) {
 
-                        b.putBoolean("isLoaded" , true);
+
 
                         if (response.body().getData().size() > 0) {
+
                             if (response.body().getData().size() == 1) {
                                 datum1 = response.body().getData().get(response.body().getData().size() - 1);
                                 if (myContext !=null)
@@ -312,13 +312,11 @@ public static Fragment fragment=new Offerfragment();
                                 price_new_two.setText(datum1.getCurrentPrice().toString());
                                 no_ffer_two.setVisibility(View.GONE);
                             }
-
-
                             if (response.body().getData().size() > 1) {
                                 datum1 = response.body().getData().get(response.body().getData().size() - 1);
                                 datum2 = response.body().getData().get(response.body().getData().size() - 2);
                                 if (myContext !=null)
-                                Glide.with(myContext).load("http://" + datum1.getFiles().get(0))
+                                Glide.with(HomeFragment.this).load("http://" + datum1.getFiles().get(0))
                                         .into(offer_two);
                                 tile_two.setText(datum1.getTitle());
                                 start_two.setText(datum1.getStartTime().split(" ")[0]);
@@ -326,7 +324,7 @@ public static Fragment fragment=new Offerfragment();
                                 price_old_two.setText(datum1.getPreviousPrice().toString());
                                 price_new_two.setText(datum1.getCurrentPrice().toString());
                                 if (myContext !=null)
-                                Glide.with(myContext).load("http://" + datum2.getFiles().get(0))
+                                Glide.with(HomeFragment.this).load("http://" + datum2.getFiles().get(0))
                                         .into(offer_one);
                                 title_one.setText(datum2.getTitle());
                                 start_one.setText(datum2.getStartTime().split(" ")[0]);
@@ -336,6 +334,7 @@ public static Fragment fragment=new Offerfragment();
                                 no_ffer_two.setVisibility(View.GONE);
                                 no_offer_one.setVisibility(View.GONE);
                             }
+
                         }
                     }
                 }

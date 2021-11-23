@@ -67,19 +67,23 @@ public class Offerfragment extends Fragment {
                 public void onChanged(AllOffer allOffers) {
                     if(allOffers !=null)
                     {
-                    ArrayList<Datum> rev=new ArrayList<>();
-                    rev= (ArrayList<Datum>) allOffers.getData();
-                    Collections.reverse(rev);
-                    offerAdapter.setlist( rev);
-                    mRecyclerView.setAdapter(offerAdapter);
-                    progressBar.setVisibility(View.GONE);
-                    if(allOffers.getData().size()==0||allOffers.getData() ==null)
-                    {
+                        if(allOffers.getData().size()==0||allOffers.getData() ==null)
+                        {
 
-                        mRecyclerView.setVisibility(View.GONE);
-                        tvView.setVisibility(View.VISIBLE);
-                        tvView.setText("لا يوجد عروض حاليا");
-                    }
+                            mRecyclerView.setVisibility(View.GONE);
+                            tvView.setVisibility(View.VISIBLE);
+                            tvView.setText("لا يوجد عروض حاليا");
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+                        else {
+                            ArrayList<Datum> rev = new ArrayList<>();
+                            rev = (ArrayList<Datum>) allOffers.getData();
+                            Collections.reverse(rev);
+                            offerAdapter.setlist(rev);
+                            mRecyclerView.setAdapter(offerAdapter);
+                            progressBar.setVisibility(View.GONE);
+                        }
                 }
 
                 }
@@ -94,14 +98,6 @@ public class Offerfragment extends Fragment {
         }
        // LoadingDialog.hideDialog();
 
-        ivView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, new HomeFragment(), "NewFragmentTag");
-                ft.commit();
-            }
-        });
 
         return view;
     }
@@ -109,6 +105,16 @@ public class Offerfragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ivView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 ivView.setClickable(false);
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, new HomeFragment(), "NewFragmentTag");
+                ft.commit();
+
+            }
+        });
 
 
 

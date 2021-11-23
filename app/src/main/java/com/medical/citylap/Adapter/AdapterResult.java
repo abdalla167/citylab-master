@@ -121,7 +121,6 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                 holder.typetest.setText(resultApi.getData().get(position).getNotes() + "");
                 date = resultApi.getData().get(position).getUploadDate().substring(0, 10);
                 holder.dateinside.setText(date);
-
                 Date date1 = null;
                 try {
                     date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -198,8 +197,8 @@ public class AdapterResult extends RecyclerView.Adapter<AdapterResult.ViewHolder
                 }
                 // if is images
                 if (resultApi.getData().get(position).getMediaType() == 0) {
-                      holder.recycler.setVisibility(View.VISIBLE);
-                    holder.noimag.setVisibility(View.GONE);
+                        holder.recycler.setVisibility(View.VISIBLE);
+                        holder.noimag.setVisibility(View.GONE);
                         holder.recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         holder.adapter = new AdapteronlyImage(mContext, 1);
                         holder.adapter.setlist(resultApi.getData().get(position).getFiles());

@@ -22,7 +22,9 @@ public class RetrofitClint {
     public RetrofitClint() {
 
 
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        Retrofit retrofit=new Retrofit.Builder().baseUrl(BASE_URL).
+                addConverterFactory(GsonConverterFactory.create()).
+                addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build();
         apiApi=retrofit.create(API.class);
     }

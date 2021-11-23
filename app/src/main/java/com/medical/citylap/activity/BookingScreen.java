@@ -44,6 +44,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.model.Image;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +54,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.medical.citylap.R;
 import com.medical.citylap.RetrofitClint;
 import com.medical.citylap.helperfunction.FileData;
+import com.medical.citylap.helperfunction.ResizJavaImage;
 import com.medical.citylap.modles.LocationModle;
 import com.medical.citylap.modles.Reservation;
 import com.medical.citylap.modles.SimpleResponse;
@@ -63,9 +66,11 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -83,6 +88,8 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
     Spinner far3;
     String location="";
     String sOffDate = "";
+    String fakedate="";
+   List<Image> image=new ArrayList<>();
   List< String> far3_item=new ArrayList<>();
     LocationModle locationModlel=new LocationModle();
     DatePickerDialog.OnDateSetListener Date_booking;
@@ -212,6 +219,7 @@ public class BookingScreen extends AppCompatActivity implements PopupMenu.OnMenu
                                 if (response.isSuccessful()) {
                                     pDialog.dismiss();
                                     Toast.makeText(BookingScreen.this, "تم الحجز بنجاح", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "onResponse: "+response.body().getMessage());
                                   //  progressBar.setVisibility(View.GONE);
 
                                 }
@@ -403,18 +411,18 @@ imageViewback.setOnClickListener(new View.OnClickListener() {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void cameraIntent() {
         if (checkStoragePermission(MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_CAMERA)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, REQUEST_CAMERA_CODE);
+            ImagePicker.create(this).showCamera(false).start(REQUEST_GALLERY_CODE);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void galleryIntent() {
         if (checkStoragePermission(MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_GALLERY)) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_GALLERY_CODE);
+            ImagePicker.create(this).showCamera(false).start(REQUEST_GALLERY_CODE);
+//            Intent intent = new Intent();
+//            intent.setType("image/*");
+//            intent.setAction(Intent.ACTION_GET_CONTENT);//
+//            startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_GALLERY_CODE);
         }
     }
 
@@ -422,29 +430,24 @@ imageViewback.setOnClickListener(new View.OnClickListener() {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getData() != null) {
-                try {
-                    inputStream = this.getContentResolver()
-                            .openInputStream(data.getData());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+
+                image=ImagePicker.getImages(data);
+
 
             if (requestCode == REQUEST_GALLERY_CODE)
-                onSelectFromGalleryResult(data);
+                onSelectFromGalleryResult(image.get(0));
             else if (requestCode == REQUEST_CAMERA_CODE)
-                onCaptureImageResult(data);
+                onCaptureImageResult(image.get(0));
 
 
         }
     }
 
-    private void onSelectFromGalleryResult(Intent data) {
+    private void onSelectFromGalleryResult(Image data) {
         Bitmap bm;
         if (data != null) {
             try {
-                bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                bm = ResizJavaImage.decodeFile(data.getPath());
                 if (bytes == null)
                     bytes = new ByteArrayOutputStream();
                 bytes.reset();
@@ -461,15 +464,16 @@ imageViewback.setOnClickListener(new View.OnClickListener() {
                 imageView.setImageBitmap(fileData.getBitmap());
 
               imageBase64=sImage;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void onCaptureImageResult(Intent data) {
-        if (data != null) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+    private void onCaptureImageResult(Image image) {
+        if (image != null) {
+            Bitmap thumbnail = ResizJavaImage.decodeFile(image.getPath());
+            bytes = new ByteArrayOutputStream();
             if (bytes == null)
                 bytes = new ByteArrayOutputStream();
             bytes.reset();
@@ -574,6 +578,8 @@ imageViewback.setOnClickListener(new View.OnClickListener() {
                     man=month+"";
                 }
                 sOffDate = day + "/" + man + "/" + year;
+
+                //fakedate=(d1)+"/"+ man + "/" + year;
                 textView_date.setText(sOffDate);
             }
         };

@@ -104,7 +104,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="0.9"
                                 android:gravity="center"
-                                android:text="معامل ستي لاب"
+                                android:text="معامل المدينه"
                                 android:textColor="#2e3094"
                                 android:textSize="18sp" />
 
@@ -220,7 +220,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cairo_semibold"
                             android:gravity="center"
-                            android:text="نصايح "
+                            android:text="نصائح "
                             android:textColor="#2e3094"
                             android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -251,6 +251,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.745" />
 
+
                         <Button
                             android:id="@+id/presserblode_id_home"
                             android:layout_width="wrap_content"
@@ -258,19 +259,18 @@
                             android:background="@drawable/borderwhite"
                             android:drawableRight="@drawable/bloodpre"
                             android:gravity="center"
-                            android:paddingRight="10dp"
                             android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
                             android:text="قياس ضغط الدم"
                             android:textColor="#2e3094"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/guideline3"
                             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                            app:layout_constraintHorizontal_bias="0.173"
+                            app:layout_constraintHorizontal_bias="0.366"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.756" />
-
+                            app:layout_constraintVertical_bias="0.745" />
 
                         <Button
                             android:id="@+id/perfect_wight_id_home"
@@ -303,7 +303,7 @@
                             android:gravity="center"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="معلومات طبيه"
+                            android:text="معلومات قبل التحليل"
                             android:textColor="#2e3094"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -339,32 +339,21 @@
                         android:layout_weight="1">
 
 
-                        <ImageView
-                            android:id="@+id/imageView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/mark"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.958"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
                         <TextView
                             android:id="@+id/textView4"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/mark"
                             android:gravity="center"
                             android:text="العروض"
                             android:textColor="#2e3094"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.941"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.487" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Button
                             android:id="@+id/see_all_offer"
@@ -654,14 +643,26 @@
                     android:layout_height="250dp"
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="#FFFF"
-                    android:gravity="top">
+
+                    android:orientation="vertical"
+                    android:gravity="top|right">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:gravity="center"
+                        android:text="نصائح عامه "
+                        android:drawableRight="@drawable/light"
+                        android:textColor="#2e3094"
+                        android:textSize="13sp"
+                        />
 
                     <ImageView
                         android:id="@+id/next_updat_home"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/advice" />
+                        android:src="@drawable/advisetwo" />
 
                 </LinearLayout>
                 <TextView

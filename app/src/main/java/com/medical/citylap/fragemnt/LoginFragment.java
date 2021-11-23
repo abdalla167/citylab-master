@@ -95,7 +95,7 @@ public class LoginFragment extends Fragment {
                  loButton.setBackgroundColor(Color.BLUE);
                  loButton.setClickable(false);
                  loginfunction(password.getText().toString());
-                 loButton.setClickable(true);
+
              }
 
 
@@ -142,7 +142,6 @@ public class LoginFragment extends Fragment {
         if(Conectedinternt()==true )
         {
 
-
         progressBar.setVisibility(View.VISIBLE);
         RetrofitClint.getInstance().userlogin(password,SplashScreen.deviceToken).enqueue(new Callback<Loginmodle>() {
             @Override
@@ -159,12 +158,14 @@ public class LoginFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(getContext(), "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show();
                             ft.commit();
+                            loButton.setClickable(true);
                         }
                         else
                         {
 
                             Toast.makeText(getContext(), "حدث خطاء برجاء المحاوله في وقت لاحق او التاكد من وجود اتصال بالانترنت", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
+                            loButton.setClickable(true);
                         }
 
                     }
@@ -174,9 +175,10 @@ loButton.setBackgroundResource(R.drawable.shapbutton);
 
             @Override
             public void onFailure(Call<Loginmodle> call, Throwable t) {
-                Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), ""+ t.getMessage() , Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 loButton.setBackgroundResource(R.drawable.shapbutton);
+                loButton.setClickable(true);
 
             }
         });
